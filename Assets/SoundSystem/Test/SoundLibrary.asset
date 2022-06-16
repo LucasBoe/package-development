@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e73414582b6c4f44889fead7bdd4fdb, type: 3}
   m_Name: SoundLibrary
   m_EditorClassIdentifier: 
+  audioMixerGroup: {fileID: 24300002, guid: 69e0f5ad2c83ed341ad0051993ff35ec, type: 2}
   _sounds:
   - {fileID: 3489170402730093504}
 --- !u!114 &3489170402730093504

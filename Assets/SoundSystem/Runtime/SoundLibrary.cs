@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine.Audio;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,6 +14,7 @@ namespace SoundSystem
     [CreateAssetMenu(fileName = "SoundLibrary", menuName = "SoundLibrary")]
     public class SoundLibrary : ScriptableObject
     {
+        [SerializeField] public AudioMixerGroup audioMixerGroup;
         [SerializeField] private List<Sound> _sounds = new List<Sound>();
         public List<Sound> Sounds { get => _sounds; set => _sounds = value; }
         public static string[] EditorGetSoundOptions()

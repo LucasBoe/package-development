@@ -42,6 +42,7 @@ namespace SoundSystem
             audioSource.volume = volume;
             audioSource.pitch = randomizePitch ? Random.Range(pitchRange.x, pitchRange.y) : pitch;
             audioSource.loop = loop;
+            audioSource.outputAudioMixerGroup = _myLibrary.audioMixerGroup;
 
             return c.length;
         }
