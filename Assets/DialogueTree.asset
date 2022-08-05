@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8793430813783170966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 3de9ff1b82bebad41a2eee9c2a864413
+  nodeGraphPosition: {x: 194.67946, y: 433.3709}
+  hasMultipleParents: 0
+  child: {fileID: 0}
+--- !u!114 &-6309289554195397474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 76e49f2a92ca8a44c86c59c3b09ff254
+  nodeGraphPosition: {x: 269.8868, y: -10.046757}
+  hasMultipleParents: 0
+  children:
+  - {fileID: 3214476165355960722}
+--- !u!114 &-2486372072620948656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 9a6283822143c494eb2dceb1b6bacecb
+  nodeGraphPosition: {x: 607.3039, y: 656.8489}
+  hasMultipleParents: 0
+  child: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6371a375614c15a896e2db4158a40c, type: 3}
+  m_Name: DialogueTree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -6309289554195397474}
+  treeState: 0
+  nodes:
+  - {fileID: -6309289554195397474}
+  - {fileID: 3214476165355960722}
+  - {fileID: -2486372072620948656}
+--- !u!114 &3214476165355960722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 88483ba48107d3c43aa12a0cb578211e
+  nodeGraphPosition: {x: 674.2884, y: 221.25403}
+  hasMultipleParents: 0
+  child: {fileID: -2486372072620948656}

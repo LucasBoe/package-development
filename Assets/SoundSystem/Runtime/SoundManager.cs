@@ -12,6 +12,8 @@ namespace SoundSystem
 
         Dictionary<PlayingSound, Sound> playingSounds = new Dictionary<PlayingSound, Sound>();
 
+        [SerializeField] bool log;
+
         protected virtual void Awake()
         {
             if (instance != null)
@@ -28,11 +30,19 @@ namespace SoundSystem
             playingAudio.Coroutine = StartCoroutine(PlaySoundRoutine(soundData, playingAudio, loop));
             playingSounds.Add(playingAudio, soundData);
 
+            Log("Play sound " + soundData.Name + " looping: " + loop);
+
             if (loop)
                 FadeIn(playingAudio.AudioSource, soundData.AudioVolume, fadeDuration);
 
             return playingAudio;
         }
+
+        private void Log(string message)
+        {
+            if (log) Debug.Log(message);
+        }
+
         internal PlayingSound Play(Sound soundData, Vector3 position, bool loop = false, float fadeDuration = 0.2f)
         {
             return Play(soundData, loop);
@@ -40,6 +50,7 @@ namespace SoundSystem
 
         internal void Stop(Sound sound)
         {
+            Log("stop sound " + sound.Name);
             List<PlayingSound> toStop = new List<PlayingSound>();
 
             foreach (KeyValuePair<PlayingSound, Sound> playingSound in playingSounds)
@@ -61,6 +72,7 @@ namespace SoundSystem
         private IEnumerator PlaySoundRoutine(Sound data, PlayingSound playing, bool loop)
         {
             float length = data.Configure(playing.AudioSource, loop);
+            Log("sound " + data.Name + " configured, length: " + length);
             playing.AudioSource.Play();
 
             if (!loop)
