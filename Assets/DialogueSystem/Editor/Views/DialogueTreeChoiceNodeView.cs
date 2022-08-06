@@ -36,6 +36,19 @@ namespace GraphViewDialogueTree.Editor.Views
                     TextField textField = element.Q<TextField>("textField");
                     textField.bindingPath = "Text";
                     textField.Bind(new SerializedObject(option));
+
+                    VisualElement outputContainer = element.Q<VisualElement>("output");
+
+                    Debug.LogWarning(outputContainer);
+
+                    Port output = InstantiatePort(Orientation.Horizontal, Direction.Output,
+                          Port.Capacity.Single, typeof(DialogueNode));
+                    if (output != null)
+                    {
+                        output.portName = "";
+                        output.name = "output-port";
+                        outputContainer.Add(output);
+                    }
                 }
             }
 

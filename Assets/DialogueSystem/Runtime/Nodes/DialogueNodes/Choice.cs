@@ -18,7 +18,7 @@ namespace GraphViewDialogueTree.Nodes
         /// <inheritdoc />
         public override void AddChild(DialogueNode childNode)
         {
-            options.Add(new ChoiceOption() { Next = childNode });
+
         }
 
         /// <inheritdoc />
