@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,45 +6,41 @@ using UnityEngine;
 namespace GraphViewDialogueTree.Nodes
 {
     /// <summary>
-    /// <see cref="Node"/> that contains a single line of text.
+    /// <see cref="DialogueNode"/> that contains a single line of text.
     /// </summary>
     [System.Serializable]
-    public class Line : Node
+    public class Line : DialogueNode
     {
         /// <value>
-        /// The <see cref="Node"/> to Augment.
+        /// The <see cref="DialogueNode"/> to Augment.
         /// </value>
-        [SerializeField, HideInInspector] protected Node child;
+        [SerializeField, ReadOnly] protected DialogueNode next;
+        public DialogueNode Next => next;
+
+        [SerializeField, ReadOnly] public string Text;
+
 
         #region Overrides of Node
 
         /// <inheritdoc />
-        public override void AddChild(Node childNode)
+        public override void AddChild(DialogueNode childNode)
         {
-            child = childNode;
+            next = childNode;
         }
 
         /// <inheritdoc />
-        public override void RemoveChild(Node childNode)
+        public override void RemoveChild(DialogueNode childNode)
         {
-            if (child == childNode)
-                child = null;
+            if (next == childNode)
+                next = null;
         }
 
         /// <inheritdoc />
-        public override List<Node> GetChildren()
+        public override List<DialogueNode> GetChildren()
         {
-            return new List<Node> { child };
+            return new List<DialogueNode> { next };
         }
 
         #endregion
-        protected override void OnStart() { }
-
-        protected override void OnStop() { }
-
-        protected override State OnUpdate()
-        {
-            return State.Running;
-        }
     }
 }

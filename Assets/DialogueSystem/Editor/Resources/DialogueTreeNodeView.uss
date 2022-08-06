@@ -1,9 +1,9 @@
 #input-port {
-    flex-direction: column;
+    flex-direction: row;
 }
 
 #output-port {
-    flex-direction: column-reverse;
+    flex-direction: row;
 }
 
 #node-state {
@@ -80,6 +80,14 @@
     align-items: center;
 }
 
+#condition {
+    background-color: rgba(63, 63, 63, 0.8);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    flex: 1 0 auto;
+    align-items: center;
+}
+
 #title {
     background-color: rgba(63, 63, 63, 0.8);
     height: 36px;
@@ -139,11 +147,19 @@
     border-color: rgba(17, 0, 28, 0.8);
 }
 
-.line #input, .line #output {
+.line #input {
     background-color: rgba(54, 21, 73, 0.8);
 }
 
-.line #title, .line #description {
+.line #output {
+    background-color: rgba(54, 21, 73, 0.8);
+}
+
+.line #title {
+    background-color: rgba(45, 0, 60, 0.8);
+}
+
+.line #description {
     background-color: rgba(45, 0, 60, 0.8);
 }
 
@@ -152,14 +168,21 @@
     border-color: rgba(0, 37, 58, 0.8);
 }
 
-.choice #input, .choice #output {
+.choice #input {
     background-color: rgba(21, 54, 73, 0.8);
 }
 
-.choice #title, .choice #description {
+.choice #output {
+    background-color: rgba(21, 54, 73, 0.8);
+}
+
+.choice #title {
     background-color: rgba(0, 45, 60, 0.8);
 }
 
+.choice #description {
+    background-color: rgba(0, 45, 60, 0.8);
+}
 
 .failure #node-state {
     border-color: rgba(101, 0, 0, 0.8);

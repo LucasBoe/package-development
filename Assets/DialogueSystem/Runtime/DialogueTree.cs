@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphViewDialogueTree.Nodes;
+using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,22 +21,17 @@ namespace GraphViewDialogueTree
         /// <value>
         /// The Node to start the Behavior tree.
         /// </value>
-        [HideInInspector] public Node rootNode;
-
-        /// <value>
-        /// The State the tree is in.
-        /// </value>
-        [HideInInspector] public Node.State treeState = Node.State.Running;
+        [HideInInspector] public DialogueNode rootNode;
 
         /// <value>
         /// The Nodes that the tree has.
         /// </value>
-        [SerializeField, HideInInspector] private List<Node> nodes = new List<Node>();
+        [SerializeField, ReadOnly] private List<DialogueNode> nodes = new List<DialogueNode>();
 
         /// <value>
         /// Get all of the Nodes in the Tree.
         /// </value>
-        public List<Node> GetNodes()
+        public List<DialogueNode> GetNodes()
         {
             return nodes;
         }
@@ -46,41 +42,12 @@ namespace GraphViewDialogueTree
         private bool m_hasRootNode;
 
         /// <summary>
-        /// Update the Tree by updating the root node.
-        /// </summary>
-        /// <returns>The state of the tree.</returns>
-        public Node.State Update()
-        {
-            if (!m_hasRootNode)
-            {
-                m_hasRootNode = rootNode != null;
-
-                if (!m_hasRootNode)
-                {
-                    Debug.LogWarning($"{name} needs a root node in order to properly run. Please add one.", this);
-                }
-            }
-
-            if (m_hasRootNode)
-            {
-                if (treeState == Node.State.Running)
-                    treeState = rootNode.Update();
-            }
-            else
-            {
-                treeState = Node.State.Failure;
-            }
-
-            return treeState;
-        }
-
-        /// <summary>
         /// Create a new Node and add it to the nodes.
         /// </summary>
         /// <param name="type">The Type of Node to create.</param>
-        public Node CreateNode(System.Type type)
+        public DialogueNode CreateNode(System.Type type)
         {
-            Node node = CreateInstance(type) as Node;
+            DialogueNode node = CreateInstance(type) as DialogueNode;
             node.name = type.Name;
             node.guid = GUID.Generate().ToString();
 
@@ -96,7 +63,7 @@ namespace GraphViewDialogueTree
         /// Delete a Node from the tree.
         /// </summary>
         /// <param name="node">The Node to Delete.</param>
-        public void DeleteNode(Node node)
+        public void DeleteNode(DialogueNode node)
         {
             nodes.Remove(node);
 
@@ -116,7 +83,7 @@ namespace GraphViewDialogueTree
         /// </summary>
         /// <param name="parent">The parent Node.</param>
         /// <param name="child">The Node to add to the parent.</param>
-        public void AddChild(Node parent, Node child)
+        public void AddChild(DialogueNode parent, DialogueNode child)
         {
             if (!nodes.Contains(parent)) return;
 
@@ -132,7 +99,7 @@ namespace GraphViewDialogueTree
         /// </summary>
         /// <param name="parent">The parent Node.</param>
         /// <param name="child">The Node to remove from the parent.</param>
-        public void RemoveChild(Node parent, Node child)
+        public void RemoveChild(DialogueNode parent, DialogueNode child)
         {
             if (!nodes.Contains(parent)) return;
 
@@ -144,48 +111,48 @@ namespace GraphViewDialogueTree
         /// </summary>
         /// <param name="parent">The node to get the children from</param>
         /// <returns>A list of children Nodes that the parent contains.</returns>
-        public List<Node> GetChildren(Node parent)
+        public List<DialogueNode> GetChildren(DialogueNode parent)
         {
             return !nodes.Contains(parent)
-                ? new List<Node>()
+                ? new List<DialogueNode>()
                 : nodes[nodes.IndexOf(parent)].GetChildren();
         }
 
         /// <summary>
         /// Traverse the node and run the Action.
         /// </summary>
-        public void Traverse(Node node, System.Action<Node> visitor)
-        {
-            if (!node) return;
-            visitor?.Invoke(node);
-            node.GetChildren()?.ForEach((n) => Traverse(n, visitor));
-        }
+        //public void Traverse(DialogueNode node, System.Action<DialogueNode> visitor)
+        //{
+        //    if (!node) return;
+        //    visitor?.Invoke(node);
+        //    node.GetChildren()?.ForEach((n) => Traverse(n, visitor));
+        //}
 
         /// <summary>
         /// Clone the Tree.
         /// </summary>
         /// <returns>A Clone of the tree</returns>
-        public DialogueTree Clone()
-        {
-            DialogueTree tree = Instantiate(this);
-            tree.nodes = new List<Node>();
-            foreach (Node node in nodes)
-            {
-                tree.nodes.Add(node.Clone());
-            }
-
-            tree.rootNode = tree.nodes[nodes.IndexOf(rootNode)];
-            Traverse(rootNode, (n) =>
-            {
-                int nodeIndex = nodes.IndexOf(n);
-                foreach (int childIndex in nodes[nodeIndex]?.GetChildren().Select(c => nodes.IndexOf(c)))
-                {
-                    tree.nodes[nodeIndex].RemoveChild(nodes[childIndex]);
-                    tree.AddChild(tree.nodes[nodeIndex], tree.nodes[childIndex]);
-                }
-            });
-
-            return tree;
-        }
+        //public DialogueTree Clone()
+        //{
+        //    DialogueTree tree = Instantiate(this);
+        //    tree.nodes = new List<DialogueNode>();
+        //    foreach (DialogueNode node in nodes)
+        //    {
+        //        tree.nodes.Add(node.Clone());
+        //    }
+        //
+        //    tree.rootNode = tree.nodes[nodes.IndexOf(rootNode)];
+        //    Traverse(rootNode, (n) =>
+        //    {
+        //        int nodeIndex = nodes.IndexOf(n);
+        //        foreach (int childIndex in nodes[nodeIndex]?.GetChildren().Select(c => nodes.IndexOf(c)))
+        //        {
+        //            tree.nodes[nodeIndex].RemoveChild(nodes[childIndex]);
+        //            tree.AddChild(tree.nodes[nodeIndex], tree.nodes[childIndex]);
+        //        }
+        //    });
+        //
+        //    return tree;
+        //}
     }
 }

@@ -2,6 +2,9 @@
 // 05-13-2022
 // James LaFritz
 
+using GraphViewDialogueTree.Nodes;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GraphViewDialogueTree
@@ -17,31 +20,76 @@ namespace GraphViewDialogueTree
         /// </summary>
         [SerializeField] public DialogueTree tree;
 
-        /// <summary>
-        /// Is there a tree.
-        /// </summary>
-        private bool m_hasTree;
+        [SerializeField] string uiText = "";
+        System.Action nextNodeAction;
+
+        List<TreeRunnerButton> buttons = new List<TreeRunnerButton>();
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
         /// </summary>
         private void Start()
         {
-            m_hasTree = tree != null;
-            if (!m_hasTree) return;
-
-            tree = tree.Clone();
+            if (tree == null) return;
+            //tree = tree.Clone();
+            HandleNode(tree.rootNode);
         }
 
-        /// <summary>
-        /// Update is called every frame, if the MonoBehaviour is enabled.
-        /// </summary>
-        private void Update()
+        private void HandleNode(DialogueNode node)
         {
-            m_hasTree = tree != null;
-            if (!m_hasTree) return;
+            if (node as Line != null)
+            {
+                buttons.Clear();
 
-            tree.Update();
+                Line line = (Line)node;
+                uiText = line.Text;
+                nextNodeAction = () => HandleNode(line.Next);
+            }
+            else if (node as Choice != null)
+            {
+                uiText = null;
+                nextNodeAction = null;
+
+                Choice choice = (Choice)node;
+                buttons = new List<TreeRunnerButton>();
+
+                foreach (ChoiceOption option in choice.Options)
+                {
+                    buttons.Add(new TreeRunnerButton() { Text = option.Text, Action = () => HandleNode(option.Next) });
+                }
+            }
+            else
+            {
+                buttons.Clear();
+                uiText = null;
+                nextNodeAction = null;
+            }
+        }
+
+        private void OnGUI()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Box(uiText);
+            if (nextNodeAction != null)
+            {
+                if (GUILayout.Button("next"))
+                {
+                    nextNodeAction?.Invoke();
+                }
+            }
+            GUILayout.EndHorizontal();
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                TreeRunnerButton button = buttons[i];
+                if (GUILayout.Button(button.Text))
+                    button.Action?.Invoke();
+            }
+        }
+
+        private class TreeRunnerButton
+        {
+            public string Text;
+            public System.Action Action;
         }
     }
 }

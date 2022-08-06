@@ -1,45 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GraphViewDialogueTree.Nodes
 {
-    public class Choice : Node
+    public class Choice : DialogueNode
     {
         /// <value>
-        /// The Children that this <see cref="Node"/> contains.
+        /// The Children that this <see cref="DialogueNode"/> contains.
         /// </value>
-        [SerializeField, HideInInspector] protected List<Node> children = new List<Node>();
+        [SerializeField] protected List<ChoiceOption> options = new List<ChoiceOption>();
+        public List<ChoiceOption> Options => options;
 
         #region Overrides of Node
 
         /// <inheritdoc />
-        public override void AddChild(Node childNode)
+        public override void AddChild(DialogueNode childNode)
         {
-            children.Add(childNode);
+            options.Add(new ChoiceOption() { Next = childNode });
         }
 
         /// <inheritdoc />
-        public override void RemoveChild(Node childNode)
+        public override void RemoveChild(DialogueNode childNode)
         {
-            children.Remove(childNode);
+            for (int i = options.Count - 1; i > 0; i--)
+            {
+                if (options[i].Next == childNode)
+                    options.RemoveAt(i);
+            }
         }
 
         /// <inheritdoc />
-        public override List<Node> GetChildren()
+        public override List<DialogueNode> GetChildren()
         {
-            return children;
+            return options.Select(o => o.Next).ToList();
         }
 
         #endregion
-
-        protected override void OnStart() { }
-
-        protected override void OnStop() { }
-
-        protected override State OnUpdate()
-        {
-            return State.Running;
-        }
     }
 }

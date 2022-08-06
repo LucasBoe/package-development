@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using Node = GraphViewDialogueTree.Nodes.Node;
+using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
 
 namespace GraphViewDialogueTree.Editor.Views
 {
@@ -24,9 +24,9 @@ namespace GraphViewDialogueTree.Editor.Views
         public new class UxmlFactory : UxmlFactory<DialogueTreeView, UxmlTraits> { }
 
         /// <summary>
-        /// <value>Notifies the Observers that a <see cref="Node"/> has been Selected and pass the <see cref="Node"/> that was selected.</value>
+        /// <value>Notifies the Observers that a <see cref="DialogueNode"/> has been Selected and pass the <see cref="DialogueNode"/> that was selected.</value>
         /// </summary>
-        public Action<Node> onNodeSelected;
+        public Action<DialogueNode> onNodeSelected;
 
         /// <summary>
         /// <value>The Tree associated with this view.</value>
@@ -81,12 +81,12 @@ namespace GraphViewDialogueTree.Editor.Views
 
             foreach (Edge edge in from node in m_tree.GetNodes()
                                   let parentView = GetNodeByGuid(node.guid) as DialogueTreeNodeView
-                                  where parentView is { output: { } }
+                                  where parentView is { AllOutputs: { } }
                                   from child in m_tree.GetChildren(node)
                                   where child != null
                                   let childView = GetNodeByGuid(child.guid) as DialogueTreeNodeView
-                                  where childView is { input: { } }
-                                  select parentView.output.ConnectTo(childView.input))
+                                  where childView is { Input: { } }
+                                  select parentView.AllOutputs[0].ConnectTo(childView.Input))
             {
                 AddElement(edge);
             }
@@ -105,15 +105,15 @@ namespace GraphViewDialogueTree.Editor.Views
                     switch (element)
                     {
                         case DialogueTreeNodeView nodeView:
-                            DeleteNode(nodeView.node);
+                            DeleteNode(nodeView.Node);
                             break;
                         case Edge edge:
                             {
                                 DialogueTreeNodeView parentView = edge.output.node as DialogueTreeNodeView;
                                 DialogueTreeNodeView childView = edge.input.node as DialogueTreeNodeView;
-                                m_tree.RemoveChild(parentView.node, childView.node);
-                                int count = (childView.input.connections ?? Array.Empty<Edge>()).Count();
-                                childView.node.hasMultipleParents = count > 2;
+                                m_tree.RemoveChild(parentView.Node, childView.Node);
+                                int count = (childView.Input.connections ?? Array.Empty<Edge>()).Count();
+                                childView.Node.hasMultipleParents = count > 2;
 
                                 break;
                             }
@@ -128,25 +128,10 @@ namespace GraphViewDialogueTree.Editor.Views
                     DialogueTreeNodeView parentView = edge.output.node as DialogueTreeNodeView;
                     DialogueTreeNodeView childView = edge.input.node as DialogueTreeNodeView;
 
-                    m_tree.AddChild(parentView.node, childView.node);
-                    parentView.SortChildren();
+                    m_tree.AddChild(parentView.Node, childView.Node);
 
-                    int count = (childView.input.connections ?? Array.Empty<Edge>()).Count();
-                    childView.node.hasMultipleParents = count > 0;
-                }
-            }
-
-            if (graphViewChange.movedElements != null)
-            {
-                foreach (DialogueTreeNodeView parentNodeView
-                         in from movedElement in graphViewChange.movedElements
-                            let movedNode = movedElement as DialogueTreeNodeView
-                            where movedNode is { input: { connections: { } } }
-                            from edge in movedNode.input.connections
-                            where edge.output.node.GetType() == typeof(DialogueTreeNodeView)
-                            select edge.output?.node as DialogueTreeNodeView)
-                {
-                    parentNodeView?.SortChildren();
+                    int count = (childView.Input.connections ?? Array.Empty<Edge>()).Count();
+                    childView.Node.hasMultipleParents = count > 0;
                 }
             }
 
@@ -156,27 +141,44 @@ namespace GraphViewDialogueTree.Editor.Views
         /// <summary>
         /// Adds a <see cref="DialogueTreeNodeView"/> from the passed in Node.
         /// </summary>
-        /// <param name="node">The <see cref="Node"/> to create a view for.</param>
-        private void CreateNodeView(Node node)
+        /// <param name="node">The <see cref="DialogueNode"/> to create a view for.</param>
+        private void CreateNodeView(DialogueNode node)
         {
-            DialogueTreeNodeView nodeView = new DialogueTreeNodeView(node)
+            DialogueTreeNodeView nodeView = null;
+
+
+
+            if (node as GraphViewDialogueTree.Nodes.Choice != null)
             {
-                onNodeSelected = onNodeSelected
-            };
+                nodeView = new DialogueTreeChoiceNodeView(node as GraphViewDialogueTree.Nodes.Choice)
+                {
+                    onNodeSelected = onNodeSelected
+                };
+            } else if (node as GraphViewDialogueTree.Nodes.Line != null)
+            {
+                nodeView = new DialogueTreeLineNodeView(node as GraphViewDialogueTree.Nodes.Line)
+                {
+                    onNodeSelected = onNodeSelected
+                };
+            }
+
+            if (nodeView == null) return;
+
             if (m_hasTree)
                 nodeView.onSetRootNode = _ => m_tree.rootNode = node;
+
             AddElement(nodeView);
         }
 
         /// <summary>
-        /// Create a new <see cref="Node"/> with a Node View.
+        /// Create a new <see cref="DialogueNode"/> with a Node View.
         /// </summary>
         /// <param name="type">The Type of Node to create.</param>
         private void CreateNode(Type type)
         {
             if (!m_hasTree) return;
 
-            Node node = m_tree.CreateNode(type);
+            DialogueNode node = m_tree.CreateNode(type);
             CreateNodeView(node);
             Undo.RecordObject(m_tree, "Dialogue Tree (Create Node)");
 
@@ -190,10 +192,10 @@ namespace GraphViewDialogueTree.Editor.Views
         }
 
         /// <summary>
-        /// Delete a <see cref="Node"/> from the tree.
+        /// Delete a <see cref="DialogueNode"/> from the tree.
         /// </summary>
-        /// <param name="node">The <see cref="Node"/> to Delete.</param>
-        private void DeleteNode(Node node)
+        /// <param name="node">The <see cref="DialogueNode"/> to Delete.</param>
+        private void DeleteNode(DialogueNode node)
         {
             if (!m_hasTree) return;
 
@@ -203,18 +205,6 @@ namespace GraphViewDialogueTree.Editor.Views
             Undo.DestroyObjectImmediate(node);
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(m_tree);
-        }
-
-        /// <summary>
-        /// Used to Update the Node State of all nodes in this tree for when Unity is in Play Mode.
-        /// </summary>
-        public void UpdateNodeStates()
-        {
-            foreach (DialogueTreeNodeView nodeView in nodes.ToList())
-            {
-                if (nodeView.GetType() == typeof(DialogueTreeNodeView))
-                    nodeView.UpdateState();
-            }
         }
 
         #region Overrides of GraphView

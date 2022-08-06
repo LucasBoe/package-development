@@ -24,6 +24,8 @@ namespace GraphViewDialogueTree.Editor
         /// <value> The <a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Editor.html" rel="external">UnityEditor.Editor</a> associated with this view. </value>
         private UnityEditor.Editor m_editor;
 
+        public static System.Action UpdateDialogueTreeEditorManuallyEvent;
+
         /// <summary>
         /// Adds a Entry to Window/Behavior Tree/Editor
         /// Will Open the Behavior Tree Editor to Edit Behavior Trees
@@ -73,6 +75,7 @@ namespace GraphViewDialogueTree.Editor
         {
             EditorApplication.playModeStateChanged -= OnplayModeStateChanged;
             EditorApplication.playModeStateChanged += OnplayModeStateChanged;
+            UpdateDialogueTreeEditorManuallyEvent += OnSelectionChange;
         }
 
         /// <summary>
@@ -81,14 +84,7 @@ namespace GraphViewDialogueTree.Editor
         private void OnDisable()
         {
             EditorApplication.playModeStateChanged -= OnplayModeStateChanged;
-        }
-
-        /// <summary>
-        /// OnInspectorUpdate is called at 10 frames per second to give the inspector a chance to update.
-        /// </summary>
-        private void OnInspectorUpdate()
-        {
-            m_treeView?.UpdateNodeStates();
+            UpdateDialogueTreeEditorManuallyEvent -= OnSelectionChange;
         }
 
         /// <summary>
@@ -164,7 +160,7 @@ namespace GraphViewDialogueTree.Editor
         /// Causes the Node to display in the Inspector View.
         /// </summary>
         /// <param name="node">The Selected Node</param>
-        private void OnNodeSelectionChange(Node node)
+        private void OnNodeSelectionChange(DialogueNode node)
         {
             m_inspectorView.Clear();
             DestroyImmediate(m_editor);

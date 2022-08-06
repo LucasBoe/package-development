@@ -1,7 +1,3 @@
-// DialogueTreeNodeView.cs
-// 05-15-2022
-// James LaFritz
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using GraphViewDialogueTree.Nodes;
 using UnityEditor.Experimental.GraphView;
-using Node = GraphViewDialogueTree.Nodes.Node;
+using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
 
 namespace GraphViewDialogueTree.Editor.Views
 {
@@ -18,82 +14,76 @@ namespace GraphViewDialogueTree.Editor.Views
     /// > [!WARNING]
     /// > Experimental: this API is experimental and might be changed or removed in the future.
     /// 
-    /// A View for Behavior Tree <see cref="Nodes.Node"/>, derived from <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.Node.html" rel="external">UnityEditor.Experimental.GraphView.Node</a>
+    /// A View for Behavior Tree <see cref="Nodes.DialogueNode"/>, derived from <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.Node.html" rel="external">UnityEditor.Experimental.GraphView.Node</a>
     /// </summary>
     public class DialogueTreeNodeView : UnityEditor.Experimental.GraphView.Node
     {
         /// <value>
         /// The Node Associated with this view
         /// </value>
-        private Node m_node;
+        private DialogueNode myNode;
 
         /// <value>
-        /// Notifies the Observers that a <see cref="Node"/> has been Selected and pass the <see cref="Node"/> that was selected.
+        /// Notifies the Observers that a <see cref="Nodes.DialogueNode"/> has been Selected and pass the <see cref="Nodes.DialogueNode"/> that was selected.
         /// </value>
-        public Action<Node> onNodeSelected;
+        public Action<DialogueNode> onNodeSelected;
 
         /// <value>
-        /// Notifies Observers that the set root node has been selected. Pass the <see cref="Node"/> that was selected to be set as the root node.
+        /// Notifies Observers that the set root node has been selected. Pass the <see cref="Nodes.DialogueNode"/> that was selected to be set as the root node.
         /// </value>
-        public Action<Node> onSetRootNode;
+        public Action<DialogueNode> onSetRootNode;
 
         /// <value>
-        /// The <see cref="Node"/> that is associate with this view.
+        /// The <see cref="Nodes.DialogueNode"/> that is associate with this view.
         /// </value>
-        public Node node => m_node;
+        public DialogueNode Node => myNode;
 
         /// <value>The Input <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.Port.html" rel="external">UnityEditor.Experimental.GraphView.Port</a></value>
-        public Port input;
+        public Port Input;
 
-        /// <value>
-        /// The Output <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.Port.html" rel="external">UnityEditor.Experimental.GraphView.Port</a>.
-        /// </value>
-        public Port output;
+        public List<Port> AllOutputs
+        {
+            get
+            {
+                return GetAllOutputs();
+            }
+        }
 
-        private readonly Label m_description;
+        protected virtual List<Port> GetAllOutputs()
+        {
+            return new List<Port>();
+        }
+
+        private readonly Label description;
 
         /// <summary>
         /// Create a New Node View.
         /// </summary>
-        /// <param name="node"><see cref="Node"/> that is associated with this view.</param>
-        public DialogueTreeNodeView(Node node) : base(
-            AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeNodeView")))
+        /// <param name="node"><see cref="Nodes.DialogueNode"/> that is associated with this view.</param>
+        public DialogueTreeNodeView(DialogueNode node, string uiFile) : base(uiFile)
         {
-            m_description = this.Q<Label>("description-label");
-            m_node = node;
-            if (m_node == null) return;
-            base.title = m_node.GetType().Name;
-            viewDataKey = m_node.guid;
-            style.left = m_node.nodeGraphPosition.x;
-            style.top = m_node.nodeGraphPosition.y;
+            //description = this.Q<Label>("description-label");
+            myNode = node;
+            if (myNode == null) return;
+            base.title = myNode.GetType().Name;
+            viewDataKey = myNode.guid;
+            style.left = myNode.nodeGraphPosition.x;
+            style.top = myNode.nodeGraphPosition.y;
 
             CreateInputPorts();
-            CreateOutputPorts();
             SetupClasses();
         }
 
         /// <summary>
-        /// Adds Classes to the Node View depending on the <see cref="Node.State"/> of <see cref="m_node"/>
+        /// Adds Classes to the Node View depending on the <see cref="DialogueNode.State"/> of <see cref="myNode"/>
         /// </summary>
         private void SetupClasses()
         {
-            if (m_node as ActionNode != null)
-            {
-                AddToClassList("action");
-            }
-            else if (m_node as CompositeNode != null)
-            {
-                AddToClassList("composite");
-            }
-            else if (m_node as DecoratorNode != null)
-            {
-                AddToClassList("decorator");
-            }
-            else if (m_node as Choice != null)
+            if (myNode as Choice != null)
             {
                 AddToClassList("choice");
             }
-            else if (m_node as Line != null)
+            else if (myNode as Line != null)
             {
                 AddToClassList("line");
             }
@@ -104,112 +94,12 @@ namespace GraphViewDialogueTree.Editor.Views
         /// </summary>
         private void CreateInputPorts()
         {
-            input = InstantiatePort(Orientation.Vertical, Direction.Input,
-                                    Port.Capacity.Multi, typeof(Node));
-            if (input == null) return;
-            input.portName = "";
-            input.name = "input-port";
-            inputContainer.Add(input);
-        }
-
-        /// <summary>
-        /// Create Output Port based on the Node Type.
-        /// </summary>
-        private void CreateOutputPorts()
-        {
-            //if (m_node.GetType() == typeof(CompositeNode))
-            if (m_node as CompositeNode != null)
-            {
-                output = InstantiatePort(Orientation.Vertical, Direction.Output,
-                                         Port.Capacity.Multi, typeof(Node));
-            }
-            //else if (m_node.GetType() == typeof(DecoratorNode))
-            else if (m_node as DecoratorNode != null)
-            {
-                output = InstantiatePort(Orientation.Vertical, Direction.Output,
-                                         Port.Capacity.Single, typeof(Node));
-            } else if (m_node as Choice != null)
-            {
-                output = InstantiatePort(Orientation.Vertical, Direction.Output,
-                                        Port.Capacity.Multi, typeof(Node));
-            }
-            else if (m_node as Line != null)
-            {
-                output = InstantiatePort(Orientation.Vertical, Direction.Output,
-                                        Port.Capacity.Single, typeof(Node));
-            }
-
-            if (output == null) return;
-            output.portName = "";
-            output.name = "output-port";
-            outputContainer.Add(output);
-        }
-
-        /// <summary>
-        /// Sorts the Children of the <see cref="m_node"/> if it is a <see cref="CompositeNode"/>
-        /// </summary>
-        public void SortChildren()
-        {
-            CompositeNode composite = m_node as CompositeNode;
-
-            if (composite != null)
-                composite.GetChildren().Sort(SortByHorizontalPosition);
-        }
-
-        /// <summary>
-        /// Sort the Nodes by their horizontal position.
-        /// </summary>
-        /// <param name="node1">First Node.</param>
-        /// <param name="node2">Second Node.</param>
-        /// <returns> if the node1 x position in the Graph is less then node1 x position in the Graph else 1</returns>
-        private int SortByHorizontalPosition(Node node1, Node node2)
-        {
-            return node1.nodeGraphPosition.x < node2.nodeGraphPosition.x ? -1 : 1;
-        }
-
-        /// <summary>
-        /// Update the Node View Visual State.
-        /// Also Used to Visualize the <see cref="Node.State"/> of the node when Unity is in Play Mode.
-        /// </summary>
-        public void UpdateState()
-        {
-            RemoveFromClassList("running");
-            RemoveFromClassList("success");
-            RemoveFromClassList("failure");
-
-            if (m_description != null)
-            {
-                List<Node> nodes = m_node.GetChildren();
-                int count = m_node.GetChildren().Count;
-                string text = $"{count} children:";
-
-                text = nodes!.Aggregate(
-                    text,
-                    (current, child) =>
-                        $"{current}\n{(child == null ? "" : child.name)}" +
-                        $"{(child is DecoratorNode ? $": {(child.GetChildren()[0] != null ? child.GetChildren()[0].name : "")}" : "")}");
-
-                m_description.text = text;
-            }
-
-            if (!Application.isPlaying) return;
-
-            switch (m_node.state)
-            {
-                case Node.State.Running:
-                    if (m_node.IsStarted)
-                    {
-                        AddToClassList("running");
-                    }
-
-                    break;
-                case Node.State.Success:
-                    AddToClassList("success");
-                    break;
-                case Node.State.Failure:
-                    AddToClassList("failure");
-                    break;
-            }
+            Input = InstantiatePort(Orientation.Horizontal, Direction.Input,
+                                    Port.Capacity.Multi, typeof(DialogueNode));
+            if (Input == null) return;
+            Input.portName = "";
+            Input.name = "input-port";
+            inputContainer.Add(Input);
         }
 
         #region Overrides of Node
@@ -222,10 +112,10 @@ namespace GraphViewDialogueTree.Editor.Views
         public override void SetPosition(Rect newPos)
         {
             base.SetPosition(newPos);
-            Undo.RecordObject(m_node, "Dialogue Tree (Set Position)");
-            m_node.nodeGraphPosition.x = newPos.xMin;
-            m_node.nodeGraphPosition.y = newPos.yMin;
-            EditorUtility.SetDirty(m_node);
+            Undo.RecordObject(myNode, "Dialogue Tree (Set Position)");
+            myNode.nodeGraphPosition.x = newPos.xMin;
+            myNode.nodeGraphPosition.y = newPos.yMin;
+            EditorUtility.SetDirty(myNode);
         }
 
         /// <summary>
@@ -235,7 +125,7 @@ namespace GraphViewDialogueTree.Editor.Views
         /// <param name="evt">The (<a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/UIElements.ContextualMenuPopulateEvent.html" rel="external">UnityEngine.UIElements.ContextualMenuPopulateEvent</a>) event holding the menu to populate.</param>
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction($"Set as Root Node", _ => onSetRootNode?.Invoke(m_node));
+            evt.menu.AppendAction($"Set as Root Node", _ => onSetRootNode?.Invoke(myNode));
             base.BuildContextualMenu(evt);
         }
 
@@ -249,7 +139,7 @@ namespace GraphViewDialogueTree.Editor.Views
         /// </summary>
         public override void OnSelected()
         {
-            onNodeSelected?.Invoke(m_node);
+            onNodeSelected?.Invoke(myNode);
             base.OnSelected();
         }
 
