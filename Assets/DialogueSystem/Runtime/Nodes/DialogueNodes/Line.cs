@@ -9,7 +9,7 @@ namespace Simple.DialogueTree.Nodes
     /// <see cref="DialogueNode"/> that contains a single line of text.
     /// </summary>
     [System.Serializable]
-    public class Line : DialogueNode
+    public class Line : DialogueNode, ILocalizableText
     {
         /// <value>
         /// The <see cref="DialogueNode"/> to Augment.
@@ -18,7 +18,7 @@ namespace Simple.DialogueTree.Nodes
         public DialogueNode Next => next;
 
         [SerializeField, ReadOnly] public string Text;
-
+        public string GetGUID() => guid;
 
         #region Overrides of Node
 

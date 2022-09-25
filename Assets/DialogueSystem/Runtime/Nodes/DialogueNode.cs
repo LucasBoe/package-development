@@ -9,7 +9,7 @@ namespace Simple.DialogueTree.Nodes
     /// Base class for all nodes in the Behavior tree.
     /// </summary>
     [System.Serializable]
-    public abstract class DialogueNode : ScriptableTextObject
+    public abstract class DialogueNode : ScriptableObject
     {
         /// <value>
         /// The Position in the Behavior Tree View that this Node is at.
@@ -20,6 +20,13 @@ namespace Simple.DialogueTree.Nodes
         /// Does this node have more then one parent.
         /// </value>
         [HideInInspector] public bool hasMultipleParents;
+
+        [HideInInspector] public string guid;
+
+        public void GenerateGUID()
+        {
+            guid = UnityEditor.GUID.Generate().ToString();
+        }
 
         #region Abstract Methods
 
