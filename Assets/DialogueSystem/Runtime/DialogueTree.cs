@@ -4,12 +4,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using GraphViewDialogueTree.Nodes;
+using Simple.DialogueTree.Nodes;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace GraphViewDialogueTree
+namespace Simple.DialogueTree
 {
     /// <summary>
     /// Behavior tree is an execution tree, requires that the Root Node be set, derived from <a hfref="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/ScriptableObject.html">UnityEngine.ScriptableObject</a>

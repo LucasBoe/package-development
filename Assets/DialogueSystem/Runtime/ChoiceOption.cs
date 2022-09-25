@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GraphViewDialogueTree.Nodes
+namespace Simple.DialogueTree.Nodes
 {
     [System.Serializable]
-    public class ChoiceOption : TextNodeBase
+    public class ChoiceOption : ScriptableTextObject
     {
         public string Text;
         public DialogueNode Next;

@@ -7,7 +7,7 @@ using NaughtyAttributes;
 using UnityEditor;
 #endif
 
-namespace SoundSystem
+namespace Simple.SoundSystem
 {
     public class Sound : ScriptableObject
     {

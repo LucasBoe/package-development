@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace GraphViewDialogueTree.Editor.Views
+namespace Simple.DialogueTree.Editor.Views
 {
     /// <summary>
     /// <a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/UIElements.TwoPaneSplitView.html" rel="external">UnityEngine.UIElements.TwoPaneSplitView</a>

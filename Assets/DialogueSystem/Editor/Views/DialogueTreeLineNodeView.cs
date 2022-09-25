@@ -1,4 +1,4 @@
-using GraphViewDialogueTree.Nodes;
+using Simple.DialogueTree.Nodes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,9 +6,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
+using DialogueNode = Simple.DialogueTree.Nodes.DialogueNode;
 
-namespace GraphViewDialogueTree.Editor.Views
+namespace Simple.DialogueTree.Editor.Views
 {
     public class DialogueTreeLineNodeView : DialogueTreeNodeView
     {

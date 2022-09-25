@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GraphViewDialogueTree.Nodes
+namespace Simple.DialogueTree.Nodes
 {
     /// <summary>
     /// Base class for all nodes in the Behavior tree.
     /// </summary>
     [System.Serializable]
-    public abstract class DialogueNode : TextNodeBase
+    public abstract class DialogueNode : ScriptableTextObject
     {
         /// <value>
         /// The Position in the Behavior Tree View that this Node is at.

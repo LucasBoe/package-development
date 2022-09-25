@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GraphViewDialogueTree.Nodes
+namespace Simple.DialogueTree.Nodes
 {
     /// <summary>
     /// <see cref="DialogueNode"/> that contains a single line of text.

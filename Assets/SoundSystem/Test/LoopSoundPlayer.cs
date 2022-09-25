@@ -1,5 +1,5 @@
 using NaughtyAttributes;
-using SoundSystem;
+using Simple.SoundSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

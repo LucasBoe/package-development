@@ -1,13 +1,9 @@
-// DialogueTreeRunner.cs
-// 05-13-2022
-// James LaFritz
-
-using GraphViewDialogueTree.Nodes;
+using Simple.DialogueTree.Nodes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GraphViewDialogueTree
+namespace Simple.DialogueTree
 {
     /// <summary>
     /// <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html" rel="external">"UnityEngine.MonoBehaviour"</a>
@@ -19,8 +15,9 @@ namespace GraphViewDialogueTree
         /// The <see cref="DialogueTree"/> to run.
         /// </summary>
         [SerializeField] public DialogueTree tree;
+        [SerializeField] DialogueTreeTextProcessor textProcessor;
 
-        [SerializeField] string uiText = "";
+        string uiText = "";
         System.Action nextNodeAction;
 
         List<TreeRunnerButton> buttons = new List<TreeRunnerButton>();
@@ -41,7 +38,7 @@ namespace GraphViewDialogueTree
                 buttons.Clear();
 
                 Line line = (Line)node;
-                uiText = line.Text;
+                uiText = textProcessor.GetText(line);
                 nextNodeAction = () => HandleNode(line.Next);
             }
             else if (node as Choice != null)
@@ -54,7 +51,7 @@ namespace GraphViewDialogueTree
 
                 foreach (ChoiceOption option in choice.Options)
                 {
-                    buttons.Add(new TreeRunnerButton() { Text = option.Text, Action = () => HandleNode(option.Next) });
+                    buttons.Add(new TreeRunnerButton() { Text = textProcessor.GetText(option), Action = () => HandleNode(option.Next) });
                 }
             }
             else

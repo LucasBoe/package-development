@@ -4,11 +4,11 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using GraphViewDialogueTree.Nodes;
+using Simple.DialogueTree.Nodes;
 using UnityEditor.Experimental.GraphView;
-using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
+using DialogueNode = Simple.DialogueTree.Nodes.DialogueNode;
 
-namespace GraphViewDialogueTree.Editor.Views
+namespace Simple.DialogueTree.Editor.Views
 {
     /// <summary>
     /// > [!WARNING]

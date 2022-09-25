@@ -4,10 +4,10 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
+using DialogueNode = Simple.DialogueTree.Nodes.DialogueNode;
 using System.Linq;
 
-namespace GraphViewDialogueTree.Editor.Views
+namespace Simple.DialogueTree.Editor.Views
 {
     /// <summary>
     /// > [!WARNING]
@@ -161,15 +161,15 @@ namespace GraphViewDialogueTree.Editor.Views
 
 
 
-            if (node as GraphViewDialogueTree.Nodes.Choice != null)
+            if (node as Simple.DialogueTree.Nodes.Choice != null)
             {
-                nodeView = new DialogueTreeChoiceNodeView(node as GraphViewDialogueTree.Nodes.Choice)
+                nodeView = new DialogueTreeChoiceNodeView(node as Simple.DialogueTree.Nodes.Choice)
                 {
                     onNodeSelected = onNodeSelected
                 };
-            } else if (node as GraphViewDialogueTree.Nodes.Line != null)
+            } else if (node as Simple.DialogueTree.Nodes.Line != null)
             {
-                nodeView = new DialogueTreeLineNodeView(node as GraphViewDialogueTree.Nodes.Line)
+                nodeView = new DialogueTreeLineNodeView(node as Simple.DialogueTree.Nodes.Line)
                 {
                     onNodeSelected = onNodeSelected
                 };
@@ -229,8 +229,8 @@ namespace GraphViewDialogueTree.Editor.Views
         /// <param name="evt">The (<a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/UIElements.ContextualMenuPopulateEvent.html" rel="external">UnityEngine.UIElements.ContextualMenuPopulateEvent</a>) event holding the menu to populate.</param>
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction("Add Choice", _ => CreateNode(typeof(GraphViewDialogueTree.Nodes.Choice)));
-            evt.menu.AppendAction("Add Line", _ => CreateNode(typeof(GraphViewDialogueTree.Nodes.Line)));
+            evt.menu.AppendAction("Add Choice", _ => CreateNode(typeof(Simple.DialogueTree.Nodes.Choice)));
+            evt.menu.AppendAction("Add Line", _ => CreateNode(typeof(Simple.DialogueTree.Nodes.Line)));
 
             //TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<Node>();
             //foreach (Type type in types)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace GraphViewDialogueTree.Nodes
+namespace Simple.DialogueTree.Nodes
 {
     public class Choice : DialogueNode
     {

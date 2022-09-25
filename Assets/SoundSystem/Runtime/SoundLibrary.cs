@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 using UnityEditor;
 #endif
 
-namespace SoundSystem
+namespace Simple.SoundSystem
 {
     [CreateAssetMenu(fileName = "SoundLibrary", menuName = "SoundLibrary")]
     public class SoundLibrary : ScriptableObject

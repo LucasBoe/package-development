@@ -1,12 +1,12 @@
-using GraphViewDialogueTree.Editor.Views;
-using GraphViewDialogueTree.Nodes;
+using Simple.DialogueTree.Editor.Views;
+using Simple.DialogueTree.Nodes;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace GraphViewDialogueTree.Editor
+namespace Simple.DialogueTree.Editor
 {
     /// <summary>
     /// Derive from <a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/EditorWindow.html" rel="external">UnityEditor.EditorWindow</a> class to create an editor window to Edit Dialogue Tree Scriptable Objects.
