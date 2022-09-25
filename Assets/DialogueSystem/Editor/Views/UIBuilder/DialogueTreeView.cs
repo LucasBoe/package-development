@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using DialogueNode = GraphViewDialogueTree.Nodes.DialogueNode;
+using System.Linq;
 
 namespace GraphViewDialogueTree.Editor.Views
 {
@@ -79,14 +79,14 @@ namespace GraphViewDialogueTree.Editor.Views
             if (!m_hasTree) return;
             m_tree.GetNodes().ForEach(CreateNodeView);
 
-            foreach (Edge edge in from node in m_tree.GetNodes()
-                                  let parentView = GetNodeByGuid(node.guid) as DialogueTreeNodeView
-                                  where parentView is { AllOutputs: { } }
-                                  from child in m_tree.GetChildren(node)
-                                  where child != null
-                                  let childView = GetNodeByGuid(child.guid) as DialogueTreeNodeView
-                                  where childView is { Input: { } }
-                                  select parentView.AllOutputs[0].ConnectTo(childView.Input))
+            var edgesQuery = from singleNode in m_tree.GetNodes()
+                         from nexts in singleNode.GetNextNodeInfos()
+                         where nexts.Value != null
+                         let nextNodeVisuals = GetNodeByGuid(nexts.Value.guid) as DialogueTreeNodeView
+                         let nodeVisual = GetNodeByGuid(singleNode.guid) as DialogueTreeNodeView
+                         select nextNodeVisuals.Input.ConnectTo(nodeVisual.AllOutputs[nexts.Key]);
+
+            foreach (Edge edge in edgesQuery)
             {
                 AddElement(edge);
             }
@@ -125,17 +125,30 @@ namespace GraphViewDialogueTree.Editor.Views
             {
                 foreach (Edge edge in graphViewChange.edgesToCreate)
                 {
-                    DialogueTreeNodeView parentView = edge.output.node as DialogueTreeNodeView;
-                    DialogueTreeNodeView childView = edge.input.node as DialogueTreeNodeView;
+                    DialogueTreeNodeView from = edge.output.node as DialogueTreeNodeView;
+                    DialogueTreeNodeView to = edge.input.node as DialogueTreeNodeView;
 
-                    m_tree.AddChild(parentView.Node, childView.Node);
+                    int choiceIndex = GetChoiceIndexFromEdge(edge);
 
-                    int count = (childView.Input.connections ?? Array.Empty<Edge>()).Count();
-                    childView.Node.hasMultipleParents = count > 0;
+                    m_tree.AddChild(from.Node, to.Node, choiceIndex);
+
+                    int count = (to.Input.connections ?? Array.Empty<Edge>()).Count();
+                    to.Node.hasMultipleParents = count > 0;
                 }
             }
 
             return graphViewChange;
+        }
+
+        private int GetChoiceIndexFromEdge(Edge edge)
+        {
+            int index = -1;
+
+            int.TryParse(edge.output.parent.parent.name, out index);
+
+            Debug.Log(index);
+
+            return index - 1;
         }
 
         /// <summary>

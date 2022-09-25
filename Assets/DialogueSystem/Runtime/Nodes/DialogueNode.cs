@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +9,8 @@ namespace GraphViewDialogueTree.Nodes
     /// Base class for all nodes in the Behavior tree.
     /// </summary>
     [System.Serializable]
-    public abstract class DialogueNode : ScriptableObject
+    public abstract class DialogueNode : TextNodeBase
     {
-        /// <value>
-        /// The GUID of the Node View, used to get the Node View that this Node is associated with.
-        /// </value>
-        [HideInInspector] public string guid;
-
         /// <value>
         /// The Position in the Behavior Tree View that this Node is at.
         /// </value>
@@ -24,30 +21,25 @@ namespace GraphViewDialogueTree.Nodes
         /// </value>
         [HideInInspector] public bool hasMultipleParents;
 
-        #region Virtual Methods
+        #region Abstract Methods
 
         /// <summary>
         /// Add the child node to this node.
         /// </summary>
-        /// <param name="childNode">The Node to add as a Child.</param>
-        public virtual void AddChild(DialogueNode childNode) { }
+        /// <param name="nextNode">The Node to add as a Child.</param>
+        public abstract void SetNextNode(int optionIndex, DialogueNode nextNode);
 
         /// <summary>
         /// Remove a Child from the Node.
         /// </summary>
-        /// <param name="childNode">The Child to remove.</param>
-        public virtual void RemoveChild(DialogueNode childNode) { }
+        /// <param name="nextNode">The Child to remove.</param>
+        public abstract void RemoveAsNextNode(DialogueNode nextNode);
 
         /// <summary>
         /// Get a list of children the node contains.
         /// </summary>
         /// <returns>A list of children Nodes.</returns>
-        public virtual List<DialogueNode> GetChildren()
-        {
-            List<DialogueNode> children = new List<DialogueNode>();
-
-            return children;
-        }
+        public abstract List<DialogueNode> GetNextNodes();
 
         #endregion
 
@@ -59,5 +51,7 @@ namespace GraphViewDialogueTree.Nodes
         {
             return Instantiate(this);
         }
+
+        public abstract Dictionary<int, DialogueNode> GetNextNodeInfos();
     }
 }

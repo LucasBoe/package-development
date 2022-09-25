@@ -23,22 +23,29 @@ namespace GraphViewDialogueTree.Nodes
         #region Overrides of Node
 
         /// <inheritdoc />
-        public override void AddChild(DialogueNode childNode)
+        public override void SetNextNode(int optionIndex, DialogueNode nextNode)
         {
-            next = childNode;
+            next = nextNode;
         }
 
         /// <inheritdoc />
-        public override void RemoveChild(DialogueNode childNode)
+        public override void RemoveAsNextNode(DialogueNode childNode)
         {
             if (next == childNode)
                 next = null;
         }
 
         /// <inheritdoc />
-        public override List<DialogueNode> GetChildren()
+        public override List<DialogueNode> GetNextNodes()
         {
             return new List<DialogueNode> { next };
+        }
+
+        public override Dictionary<int, DialogueNode> GetNextNodeInfos()
+        {
+            Dictionary<int, DialogueNode> nodeInfos = new Dictionary<int, DialogueNode>();
+            nodeInfos.Add(0, next);
+            return nodeInfos;
         }
 
         #endregion

@@ -11,16 +11,16 @@ namespace GraphViewDialogueTree.Editor.Views
 {
     public class DialogueTreeChoiceNodeView : DialogueTreeNodeView
     {
-        List<Port> ChoiceOutputPorts = new List<Port>();
+        List<Port> choiceOutputPorts;
         protected override List<Port> GetAllOutputs()
         {
-            return ChoiceOutputPorts;
+            return choiceOutputPorts;
         }
         public DialogueTreeChoiceNodeView(Choice node) : base(node, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeChoiceNodeView")))
         {
-            VisualElement contents = this.Q<VisualElement>("contents");
+            choiceOutputPorts = new List<Port>();
 
-            Debug.Log(node.Options.Count);
+            VisualElement contents = this.Q<VisualElement>("contents");
 
             for (int i = 0; i < 5; i++)
             {
@@ -47,7 +47,9 @@ namespace GraphViewDialogueTree.Editor.Views
                     {
                         output.portName = "";
                         output.name = "output-port";
+
                         outputContainer.Add(output);
+                        choiceOutputPorts.Add(output);
                     }
                 }
             }
@@ -58,6 +60,7 @@ namespace GraphViewDialogueTree.Editor.Views
                 {
                     ChoiceOption optObj = ChoiceOption.CreateInstance(typeof(ChoiceOption)) as ChoiceOption;
                     optObj.name = node.name + " > Option " + node.Options.Count;
+                    optObj.GenerateGUID();
 
                     Undo.RecordObject(node, "Dialogue Choice (Create Option)");
                     

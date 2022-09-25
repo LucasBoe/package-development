@@ -28,9 +28,9 @@ namespace SoundSystem
         public string Name { get => clip != null ? clip.name : (clips.Count > 0 && clips[0] != null) ? clips[0].name : "New Sound"; }
 
         public PlayingSound Play() { return SoundManager.Instance.Play(this); }
-
         public PlayingSound PlayLoop(float fadeDuration = 0.2f) { return SoundManager.Instance.Play(this, loop: true, fadeDuration); }
 
+        public void PlaySound() => SoundManager.Instance.Play(this);
         public void Stop() => SoundManager.Instance.Stop(this);
         public void StopLoop() => Stop();
 

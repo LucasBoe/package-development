@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6371a375614c15a896e2db4158a40c, type: 3}
+  m_Name: Dialogue00
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 6016130243926608943}
+  nodes:
+  - {fileID: 6016130243926608943}
+  - {fileID: 772695591342349641}
+  - {fileID: 1617972595829523899}
+  - {fileID: 7763602472453343821}
+  - {fileID: 528416137960315630}
+--- !u!114 &528416137960315630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  guid: 85cab99cec3991c4fbede5c6158806c0
+  nodeGraphPosition: {x: 1150.7925, y: 245.43396}
+  hasMultipleParents: 1
+  options:
+  - {fileID: 7269688568803155532}
+  - {fileID: 6163945235918459269}
+--- !u!114 &772695591342349641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  guid: 326cba6410c398c4181d33259b849385
+  nodeGraphPosition: {x: 415.9623, y: 212.8302}
+  hasMultipleParents: 0
+  options:
+  - {fileID: 8789153531060415118}
+  - {fileID: 4487766410733663010}
+--- !u!114 &1617972595829523899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  guid: b34b29767294626458b03c08d914973e
+  nodeGraphPosition: {x: 792.3208, y: 220.98111}
+  hasMultipleParents: 0
+  next: {fileID: 528416137960315630}
+  Text: Okay, just wait here
+--- !u!114 &4487766410733663010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 1
+  m_EditorClassIdentifier: 
+  guid: 71dd42cdf42f697498d1db7442e9033c
+  Text: 12314
+  Next: {fileID: 7763602472453343821}
+--- !u!114 &6016130243926608943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  guid: 2647f534fe5cc014497fc3024b6aae43
+  nodeGraphPosition: {x: 24.5849, y: 189.88678}
+  hasMultipleParents: 0
+  next: {fileID: 772695591342349641}
+  Text: Hey, please help me!
+--- !u!114 &6163945235918459269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 1
+  m_EditorClassIdentifier: 
+  guid: 4cb366d499136de469ee7d29ec291ba9
+  Text: dsadasasd
+  Next: {fileID: 0}
+--- !u!114 &7269688568803155532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 0
+  m_EditorClassIdentifier: 
+  guid: ad82b1f638c340c4884b7964041c4991
+  Text: ddda
+  Next: {fileID: 0}
+--- !u!114 &7763602472453343821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  guid: b6770d86c1ee38149bfa26520958f0d7
+  nodeGraphPosition: {x: 792.4529, y: 289.81134}
+  hasMultipleParents: 0
+  next: {fileID: 528416137960315630}
+  Text: You suck!
+--- !u!114 &8789153531060415118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 0
+  m_EditorClassIdentifier: 
+  guid: 2d88037c898da104cb63a6065091e046
+  Text: Whaz?
+  Next: {fileID: 1617972595829523899}

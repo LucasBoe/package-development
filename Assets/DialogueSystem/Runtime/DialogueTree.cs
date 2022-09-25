@@ -14,7 +14,7 @@ namespace GraphViewDialogueTree
     /// <summary>
     /// Behavior tree is an execution tree, requires that the Root Node be set, derived from <a hfref="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/ScriptableObject.html">UnityEngine.ScriptableObject</a>
     /// </summary>
-    [CreateAssetMenu(fileName = "DialogueTree", menuName = "Behavior Tree")]
+    [CreateAssetMenu(fileName = "DialogueTree", menuName = "Dialogue Tree")]
     [System.Serializable]
     public class DialogueTree : ScriptableObject
     {
@@ -49,7 +49,7 @@ namespace GraphViewDialogueTree
         {
             DialogueNode node = CreateInstance(type) as DialogueNode;
             node.name = type.Name;
-            node.guid = GUID.Generate().ToString();
+            node.GenerateGUID();
 
             nodes.Add(node);
 
@@ -81,17 +81,19 @@ namespace GraphViewDialogueTree
         /// <summary>
         /// Add a child node to the parent.
         /// </summary>
-        /// <param name="parent">The parent Node.</param>
-        /// <param name="child">The Node to add to the parent.</param>
-        public void AddChild(DialogueNode parent, DialogueNode child)
+        /// <param name="from">The parent Node.</param>
+        /// <param name="to">The Node to add to the parent.</param>
+        public void AddChild(DialogueNode from, DialogueNode to, int optionIndex)
         {
-            if (!nodes.Contains(parent)) return;
+            //node does not exist? return
+            if (!nodes.Contains(from)) return;
 
-            nodes[nodes.IndexOf(parent)].AddChild(child);
+            //link nodes
+            nodes[nodes.IndexOf(from)].SetNextNode(optionIndex, to);
 
-            if (nodes.Contains(child)) return;
-
-            nodes.Add(child);
+            //target node is new node? add to node list
+            if (!nodes.Contains(to))
+                nodes.Add(to);
         }
 
         /// <summary>
@@ -103,19 +105,19 @@ namespace GraphViewDialogueTree
         {
             if (!nodes.Contains(parent)) return;
 
-            nodes[nodes.IndexOf(parent)].RemoveChild(child);
+            nodes[nodes.IndexOf(parent)].RemoveAsNextNode(child);
         }
 
         /// <summary>
         /// Get a list of children from the parent.
         /// </summary>
-        /// <param name="parent">The node to get the children from</param>
+        /// <param name="previousNode">The node to get the children from</param>
         /// <returns>A list of children Nodes that the parent contains.</returns>
-        public List<DialogueNode> GetChildren(DialogueNode parent)
+        public List<DialogueNode> GetNextNodes(DialogueNode previousNode)
         {
-            return !nodes.Contains(parent)
+            return !nodes.Contains(previousNode)
                 ? new List<DialogueNode>()
-                : nodes[nodes.IndexOf(parent)].GetChildren();
+                : nodes[nodes.IndexOf(previousNode)].GetNextNodes();
         }
 
         /// <summary>

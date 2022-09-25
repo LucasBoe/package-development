@@ -31,7 +31,6 @@ namespace GraphViewDialogueTree
         private void Start()
         {
             if (tree == null) return;
-            //tree = tree.Clone();
             HandleNode(tree.rootNode);
         }
 
