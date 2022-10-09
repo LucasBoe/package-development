@@ -11,6 +11,8 @@ namespace Simple.DialogueTree.Nodes
         /// The Children that this <see cref="DialogueNode"/> contains.
         /// </value>
         [SerializeField] protected List<ChoiceOption> options = new List<ChoiceOption>();
+        public override List<ScriptableObject> GetChildNodes() => options.Select(o => o as ScriptableObject).ToList();
+
         public List<ChoiceOption> Options => options;
         public string ContainerName => name;
 

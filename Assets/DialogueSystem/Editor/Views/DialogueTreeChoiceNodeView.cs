@@ -16,7 +16,7 @@ namespace Simple.DialogueTree.Editor.Views
         {
             return choiceOutputPorts;
         }
-        public DialogueTreeChoiceNodeView(Choice node) : base(node, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeChoiceNodeView")))
+        public DialogueTreeChoiceNodeView(Choice node, DialogueTreeView tree) : base(node, tree, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeChoiceNodeView")))
         {
             choiceOutputPorts = new List<Port>();
 
@@ -52,8 +52,6 @@ namespace Simple.DialogueTree.Editor.Views
 
                     VisualElement outputContainer = element.Q<VisualElement>("output");
 
-                    Debug.LogWarning(outputContainer);
-
                     Port output = InstantiatePort(Orientation.Horizontal, Direction.Output,
                           Port.Capacity.Single, typeof(DialogueNode));
                     if (output != null)
@@ -86,8 +84,7 @@ namespace Simple.DialogueTree.Editor.Views
                     EditorUtility.SetDirty(optObj);
 
                     node.Options.Add(optObj);
-
-                    DialogueTreeEditor.UpdateDialogueTreeEditorManuallyEvent?.Invoke();
+                    TryUpdateTree();
                 }
             };
 
@@ -104,9 +101,15 @@ namespace Simple.DialogueTree.Editor.Views
                     AssetDatabase.SaveAssets();
                     EditorUtility.SetDirty(node);
 
-                    DialogueTreeEditor.UpdateDialogueTreeEditorManuallyEvent?.Invoke();
+                    TryUpdateTree();
                 }
             };
+        }
+
+        private void TryUpdateTree()
+        {
+            if (Tree != null)
+                Tree.ForceVisualUpdate();
         }
     }
 }

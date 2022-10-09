@@ -22,7 +22,7 @@ namespace Simple.DialogueTree.Editor.Views
             return new List<Port>() { Output };
         }
 
-        public DialogueTreeLineNodeView(Line lineNode) : base(lineNode, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeLineNodeView")))
+        public DialogueTreeLineNodeView(Line lineNode, DialogueTreeView tree) : base(lineNode, tree, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeLineNodeView")))
         {
             textField = this.Q<TextField>("textField");
             textField.bindingPath = "Text";

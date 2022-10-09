@@ -55,14 +55,16 @@ namespace Simple.DialogueTree.Editor.Views
         }
 
         private readonly Label description;
+        protected DialogueTreeView Tree;
 
         /// <summary>
         /// Create a New Node View.
         /// </summary>
         /// <param name="node"><see cref="Nodes.DialogueNode"/> that is associated with this view.</param>
-        public DialogueTreeNodeView(DialogueNode node, string uiFile) : base(uiFile)
+        public DialogueTreeNodeView(DialogueNode node, DialogueTreeView tree, string uiFile) : base(uiFile)
         {
             //description = this.Q<Label>("description-label");
+            this.Tree = tree;
             myNode = node;
             if (myNode == null) return;
             base.title = myNode.GetType().Name;

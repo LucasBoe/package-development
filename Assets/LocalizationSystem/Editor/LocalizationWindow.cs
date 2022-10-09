@@ -14,6 +14,7 @@ namespace Simple.Localization
         private LocalizationMasterDatabase database;
         private List<LocalizationLanguageDatabase> activeLanguages;
 
+        private bool keyModeActive = false;
         private int activeTab = 0;
         private Vector2 scrollValue;
 
@@ -66,7 +67,8 @@ namespace Simple.Localization
                 keyCollumWidth = Mathf.Max(100, (int)position.width / languageCollumCount / 2);
                 languagecollumnWidth = Mathf.FloorToInt(((float)position.width - keyCollumWidth) / languageCollumCount);
 
-                GUILayout.Label("Key", GUILayout.Width(keyCollumWidth));
+                if (GUILayout.Button(keyModeActive ? "Key / (Name)" : "Name / (Key)", GUILayout.Width(keyCollumWidth)))
+                    keyModeActive = !keyModeActive;
 
                 for (int i = 0; i < activeLanguages.Count; i++)
                 {
@@ -105,7 +107,19 @@ namespace Simple.Localization
             foreach (LocalizationKey key in database.Keys)
             {
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Label(key.Key, GUILayout.Width(keyCollumWidth));
+
+                if (keyModeActive)
+                {
+                    GUILayout.Label(key.Key, GUILayout.Width(keyCollumWidth));
+                }
+                else
+                {
+                    string nameAfter = GUILayout.TextField(key.Name, GUILayout.Width(keyCollumWidth));
+                    if (nameAfter != key.Name)
+                    {
+                        key.Name = nameAfter;
+                    }
+                }
 
                 foreach (LocalizationLanguageDatabase language in activeLanguages)
                 {
@@ -151,8 +165,6 @@ namespace Simple.Localization
 
                     EditorGUILayout.LabelField(textContainer.ContainerName + " > Total Texts: " + total + " / " + localized + " localized >> " + Mathf.RoundToInt(localized / total * 100) + "%");
 
-
-
                     if (localized < total && GUILayout.Button("Create " + (total - localized) + " additional Keys"))
                     {
                         if (settings.DefaultLanguage != null)
@@ -162,7 +174,7 @@ namespace Simple.Localization
                                 string key = text.GetGUID();
                                 if (!settings.DefaultLanguage.HasEntry(key))
                                 {
-                                    settings.DefaultLanguage.AddEntry(key, text.GetValue());
+                                    settings.DefaultLanguage.AddEntry(new LocalizationKey() { Key = key, Name = textContainer.ContainerName + "_" + text.ToString()}, text.GetValue());
                                     text.SetIsLocalized(true, key);
                                 }
                             }

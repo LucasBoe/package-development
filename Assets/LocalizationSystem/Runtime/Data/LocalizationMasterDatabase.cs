@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -44,6 +45,21 @@ namespace Simple.Localization
             keys.Add(newKey);
             return newKey;
         }
+
+        internal LocalizationKey AddOrUpdateKey(LocalizationKey key)
+        {
+            foreach (LocalizationKey existingKey in keys)
+            {
+                if (existingKey.Key == key.Key)
+                {
+                    existingKey.Name = key.Name;
+                    return existingKey;
+                }
+            }
+
+            keys.Add(key);
+            return key;
+        }
 #endif
     }
 
@@ -51,6 +67,7 @@ namespace Simple.Localization
     public class LocalizationKey
     {
         public string Key;
+        public string Name;
         public bool Is(LocalizationKey key) => key.Key == Key;
     }
 }

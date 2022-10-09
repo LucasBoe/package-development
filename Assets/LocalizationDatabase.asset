@@ -14,34 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   master: {fileID: 11400000}
   Name: English
-  pairs:
-  - Key:
-      Key: 2647f534fe5cc014497fc3024b6aae43
-    Value: No, I won't help you, sorry!
-  - Key:
-      Key: b34b29767294626458b03c08d914973e
-    Value: Okay, just wait here. Okay?
-  - Key:
-      Key: b6770d86c1ee38149bfa26520958f0d7
-    Value: You suck!
-  - Key:
-      Key: 2d88037c898da104cb63a6065091e046
-    Value: Whaz?ffdsaasd
-  - Key:
-      Key: 71dd42cdf42f697498d1db7442e9033c
-    Value: 12314
-  - Key:
-      Key: ad82b1f638c340c4884b7964041c4991
-    Value: ddda
-  - Key:
-      Key: 4cb366d499136de469ee7d29ec291ba9
-    Value: dsadasasd
-  - Key:
-      Key: fe8bfa7e6a96f3a49bf41f58d4f20a7a
-    Value: I'm not localized yet!
-  - Key:
-      Key: 360f3c0974d9f3c489ce5065199aaf4a
-    Value: Sorry!
+  pairs: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,20 +27,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f397a4c5f73064ab9a1fed6176ee13, type: 3}
   m_Name: LocalizationDatabase
   m_EditorClassIdentifier: 
-  keys:
-  - Key: Test123
-  - Key: 2647f534fe5cc014497fc3024b6aae43
-  - Key: b34b29767294626458b03c08d914973e
-  - Key: b6770d86c1ee38149bfa26520958f0d7
-  - Key: 2d88037c898da104cb63a6065091e046
-  - Key: 71dd42cdf42f697498d1db7442e9033c
-  - Key: ad82b1f638c340c4884b7964041c4991
-  - Key: 4cb366d499136de469ee7d29ec291ba9
-  - Key: fe8bfa7e6a96f3a49bf41f58d4f20a7a
-  - Key: 360f3c0974d9f3c489ce5065199aaf4a
+  keys: []
   languages:
   - {fileID: -5406573849392729687}
-  - {fileID: 6144160213710523250}
   - {fileID: 3011719677472350717}
 --- !u!114 &3011719677472350717
 MonoBehaviour:
@@ -83,49 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   master: {fileID: 11400000}
   Name: German
-  pairs:
-  - Key:
-      Key: 2647f534fe5cc014497fc3024b6aae43
-    Value: Nein, ich werde dir nicht helfen. Tut mir leid!
-  - Key:
-      Key: b34b29767294626458b03c08d914973e
-    Value: Okay, warte einfach hier. Okay?
-  - Key:
-      Key: b6770d86c1ee38149bfa26520958f0d7
-    Value: Du stinkst!
-  - Key:
-      Key: 2d88037c898da104cb63a6065091e046
-    Value: Waaassadsa??
-  - Key:
-      Key: 71dd42cdf42f697498d1db7442e9033c
-    Value: 1234
-  - Key:
-      Key: ad82b1f638c340c4884b7964041c4991
-    Value: ddda
-  - Key:
-      Key: 4cb366d499136de469ee7d29ec291ba9
-    Value: dsadsdasdawda
-  - Key:
-      Key: fe8bfa7e6a96f3a49bf41f58d4f20a7a
-    Value: "Ich wurde noch nicht \xFCbersetzt!"
-  - Key:
-      Key: 360f3c0974d9f3c489ce5065199aaf4a
-    Value: Tut mir leid
---- !u!114 &6144160213710523250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbfef0ae95977b4c93511cd1738a995, type: 3}
-  m_Name: Greek
-  m_EditorClassIdentifier: 
-  master: {fileID: 11400000}
-  Name: Greek
-  pairs:
-  - Key:
-      Key: 2647f534fe5cc014497fc3024b6aae43
-    Value: No todos hermanos!
+  pairs: []

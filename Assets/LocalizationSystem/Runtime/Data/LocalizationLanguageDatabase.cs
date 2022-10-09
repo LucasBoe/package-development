@@ -108,7 +108,7 @@ namespace Simple.Localization
 
         public bool HasEntry(LocalizationKey key) => pairs.Where(p => p.Key.Is(key)).Count() > 0;
         public LocalizationKeyValuePair GetEntry(LocalizationKey key) => pairs.Where(p => p.Key.Is(key)).FirstOrDefault();
-        public void AddEntry(LocalizationKey key, string value) => pairs.Add(new LocalizationKeyValuePair() { Key = key, Value = value });
+        public void AddEntry(LocalizationKey key, string value) => pairs.Add(new LocalizationKeyValuePair() { Key = master.AddOrUpdateKey(key), Value = value });
         public void AddEntry(string key, string value) => pairs.Add(new LocalizationKeyValuePair() { Key = master.AddKey(key), Value = value });
         public void SetEntry(LocalizationKey key, string value)
         {

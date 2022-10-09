@@ -8,6 +8,7 @@ using Simple.DialogueTree.Nodes;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 namespace Simple.DialogueTree
 {

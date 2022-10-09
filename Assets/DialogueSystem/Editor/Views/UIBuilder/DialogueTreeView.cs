@@ -77,7 +77,10 @@ namespace Simple.DialogueTree.Editor.Views
 
             m_hasTree = m_tree != null;
             if (!m_hasTree) return;
-            m_tree.GetNodes().ForEach(CreateNodeView);
+            m_tree.GetNodes().ForEach(n =>
+            {
+                CreateNodeView(n, this);
+            });
 
             var edgesQuery = from singleNode in m_tree.GetNodes()
                          from nexts in singleNode.GetNextNodeInfos()
@@ -90,6 +93,11 @@ namespace Simple.DialogueTree.Editor.Views
             {
                 AddElement(edge);
             }
+        }
+
+        internal void ForceVisualUpdate()
+        {
+            if (m_hasTree) PopulateView(m_tree);
         }
 
         /// <summary>
@@ -155,21 +163,19 @@ namespace Simple.DialogueTree.Editor.Views
         /// Adds a <see cref="DialogueTreeNodeView"/> from the passed in Node.
         /// </summary>
         /// <param name="node">The <see cref="DialogueNode"/> to create a view for.</param>
-        private void CreateNodeView(DialogueNode node)
+        private void CreateNodeView(DialogueNode node, DialogueTreeView tree)
         {
             DialogueTreeNodeView nodeView = null;
 
-
-
             if (node as Simple.DialogueTree.Nodes.Choice != null)
             {
-                nodeView = new DialogueTreeChoiceNodeView(node as Simple.DialogueTree.Nodes.Choice)
+                nodeView = new DialogueTreeChoiceNodeView(node as Simple.DialogueTree.Nodes.Choice, tree)
                 {
                     onNodeSelected = onNodeSelected
                 };
             } else if (node as Simple.DialogueTree.Nodes.Line != null)
             {
-                nodeView = new DialogueTreeLineNodeView(node as Simple.DialogueTree.Nodes.Line)
+                nodeView = new DialogueTreeLineNodeView(node as Simple.DialogueTree.Nodes.Line, tree)
                 {
                     onNodeSelected = onNodeSelected
                 };
@@ -192,7 +198,7 @@ namespace Simple.DialogueTree.Editor.Views
             if (!m_hasTree) return;
 
             DialogueNode node = m_tree.CreateNode(type);
-            CreateNodeView(node);
+            CreateNodeView(node, this);
             Undo.RecordObject(m_tree, "Dialogue Tree (Create Node)");
 
             if (Application.isPlaying) return;
@@ -214,7 +220,10 @@ namespace Simple.DialogueTree.Editor.Views
 
             m_tree.DeleteNode(node);
             Undo.RecordObject(m_tree, "Dialogue Tree (Delete Node)");
-
+            foreach (ScriptableObject child in node.GetChildNodes())
+            {
+                Undo.DestroyObjectImmediate(child);
+            }
             Undo.DestroyObjectImmediate(node);
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(m_tree);

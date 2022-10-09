@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5727735845389606032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 1
+  m_EditorClassIdentifier: 
+  guid: da512c8b99b8ae24ba6bff19ea1ce679
+  isLocalized: 0
+  Text: 
+  Next: {fileID: 0}
+--- !u!114 &-4571040239449113506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  nodeGraphPosition: {x: 809.1699, y: 386}
+  hasMultipleParents: 0
+  guid: b22aab7ff1efc7f42bf5d6d63639e8f9
+  options:
+  - {fileID: -2466042322478000495}
+  - {fileID: -5727735845389606032}
+--- !u!114 &-2466042322478000495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 0
+  m_EditorClassIdentifier: 
+  guid: 8f3b29568c649bd48bd06f478ef693ed
+  isLocalized: 0
+  Text: 
+  Next: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6371a375614c15a896e2db4158a40c, type: 3}
+  m_Name: NPC1
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 2017819508937536112}
+  nodes:
+  - {fileID: 2017819508937536112}
+  - {fileID: -4571040239449113506}
+--- !u!114 &2017819508937536112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  nodeGraphPosition: {x: 357.75473, y: 526.56604}
+  hasMultipleParents: 0
+  guid: d1bc20f4ae5ea264b933901507d4b0f1
+  next: {fileID: -4571040239449113506}
+  Text: I'm an NPC!
+  isLocalized: 0

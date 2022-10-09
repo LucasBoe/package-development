@@ -75,6 +75,8 @@ namespace Simple.DialogueTree.Editor
         {
             EditorApplication.playModeStateChanged -= OnplayModeStateChanged;
             EditorApplication.playModeStateChanged += OnplayModeStateChanged;
+
+            UpdateDialogueTreeEditorManuallyEvent -= OnSelectionChange;
             UpdateDialogueTreeEditorManuallyEvent += OnSelectionChange;
         }
 
@@ -83,8 +85,13 @@ namespace Simple.DialogueTree.Editor
         /// </summary>
         private void OnDisable()
         {
+            Debug.Log("Desotry");
             EditorApplication.playModeStateChanged -= OnplayModeStateChanged;
-            UpdateDialogueTreeEditorManuallyEvent -= OnSelectionChange;
+        }
+
+        private void OnDestroy()
+        {
+            UpdateDialogueTreeEditorManuallyEvent -= OnSelectionChange;            
         }
 
         /// <summary>
