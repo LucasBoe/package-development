@@ -338,8 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: 06a61a1109069d54d8b9faaea55d5b2f, type: 2}
-  textProcessor: {fileID: 11400000, guid: 73e0923f3ed7272408cbb8e083154647, type: 2}
-  uiText: 
+  textProcessor: {fileID: 11400000, guid: 0201914a9d5279f4eb96da0732c6ff9c, type: 2}
 --- !u!4 &1613364202
 Transform:
   m_ObjectHideFlags: 0

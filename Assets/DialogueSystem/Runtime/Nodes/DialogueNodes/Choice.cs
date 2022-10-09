@@ -5,13 +5,16 @@ using UnityEngine;
 
 namespace Simple.DialogueTree.Nodes
 {
-    public class Choice : DialogueNode
+    public class Choice : DialogueNode, ILocalizeableTextContainer
     {
         /// <value>
         /// The Children that this <see cref="DialogueNode"/> contains.
         /// </value>
         [SerializeField] protected List<ChoiceOption> options = new List<ChoiceOption>();
         public List<ChoiceOption> Options => options;
+        public string ContainerName => name;
+
+        public ILocalizeableText[] GetAllChilds() => options.ToArray();
 
         #region Overrides of Node
 

@@ -26,7 +26,23 @@ namespace Simple.DialogueTree.Editor.Views
         {
             textField = this.Q<TextField>("textField");
             textField.bindingPath = "Text";
-            textField.Bind(new SerializedObject(lineNode));
+
+            SerializedProperty property = DialogueTreeTextProcessor.GetProperty(lineNode);
+
+            bool propertyExists = property != null;
+
+            if (!lineNode.IsLocalized || !propertyExists)
+                textField.Remove(textField.Q<Label>("localized"));
+
+            if (propertyExists)
+            {
+                textField.BindProperty(property);
+            }
+            else
+            {
+                textField.SetValueWithoutNotify("<no translation in this language yet>");
+                textField.isReadOnly = true;
+            }
             CreateOutputPorts();
         }
 

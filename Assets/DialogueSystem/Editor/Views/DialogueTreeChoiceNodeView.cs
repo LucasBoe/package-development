@@ -32,10 +32,23 @@ namespace Simple.DialogueTree.Editor.Views
                 else
                 {
                     ChoiceOption option = node.Options[i];
-
+                    SerializedProperty property = DialogueTreeTextProcessor.GetProperty(option);
                     TextField textField = element.Q<TextField>("textField");
-                    textField.bindingPath = "Text";
-                    textField.Bind(new SerializedObject(option));
+
+                    bool properyExists = property != null;
+
+                    if (!option.IsLocalized || !properyExists)
+                        textField.Remove(textField.Q<Label>("localized"));             
+
+                    if (properyExists)
+                    {
+                        textField.BindProperty(property);
+                    }
+                    else
+                    {
+                        textField.SetValueWithoutNotify("<no translation in this language yet>");
+                        textField.isReadOnly = true;
+                    }
 
                     VisualElement outputContainer = element.Q<VisualElement>("output");
 
@@ -63,12 +76,12 @@ namespace Simple.DialogueTree.Editor.Views
                     optObj.GenerateGUID();
 
                     Undo.RecordObject(node, "Dialogue Choice (Create Option)");
-                    
+
                     if (Application.isPlaying) return;
-                    
+
                     AssetDatabase.AddObjectToAsset(optObj, node);
                     AssetDatabase.SaveAssets();
-                    
+
                     Undo.RegisterCreatedObjectUndo(optObj, "Dialogue Choice (Create Option");
                     EditorUtility.SetDirty(optObj);
 

@@ -9,27 +9,37 @@
             </ui:VisualElement>
             <ui:VisualElement name="1" style="flex-direction: row;">
                 <ui:VisualElement name="condition" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
             <ui:VisualElement name="2" style="flex-direction: row;">
                 <ui:VisualElement name="condition" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
             <ui:VisualElement name="3" style="flex-direction: row;">
                 <ui:VisualElement name="condition" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
             <ui:VisualElement name="4" style="flex-direction: row;">
                 <ui:VisualElement name="condition" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
             <ui:VisualElement name="5" style="flex-direction: row;">
                 <ui:VisualElement name="condition" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%; white-space: normal;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
             <ui:VisualElement name="buttons" picking-mode="Ignore" style="flex-direction: row;">

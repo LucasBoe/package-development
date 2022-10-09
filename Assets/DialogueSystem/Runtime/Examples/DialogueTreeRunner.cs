@@ -38,7 +38,7 @@ namespace Simple.DialogueTree
                 buttons.Clear();
 
                 Line line = (Line)node;
-                uiText = textProcessor.GetText(line);
+                uiText = textProcessor.FindText(line);
                 nextNodeAction = () => HandleNode(line.Next);
             }
             else if (node as Choice != null)
@@ -51,7 +51,7 @@ namespace Simple.DialogueTree
 
                 foreach (ChoiceOption option in choice.Options)
                 {
-                    buttons.Add(new TreeRunnerButton() { Text = textProcessor.GetText(option), Action = () => HandleNode(option.Next) });
+                    buttons.Add(new TreeRunnerButton() { Text = textProcessor.FindText(option), Action = () => HandleNode(option.Next) });
                 }
             }
             else

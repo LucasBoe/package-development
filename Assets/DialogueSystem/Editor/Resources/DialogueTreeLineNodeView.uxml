@@ -8,7 +8,9 @@
             </ui:VisualElement>
             <ui:VisualElement name="body" style="flex-direction: row;">
                 <ui:VisualElement name="input" />
-                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%;" />
+                <ui:TextField picking-mode="Ignore" value="filler text" text="filler text" name="textField" style="max-width: 95%; min-width: 80%;">
+                    <ui:Label text="(L)" display-tooltip-when-elided="true" name="localized" />
+                </ui:TextField>
                 <ui:VisualElement name="output" />
             </ui:VisualElement>
         </ui:VisualElement>
