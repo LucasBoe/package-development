@@ -9,18 +9,18 @@ namespace Simple.DialogueTree
 {
     public class DialogueTreeTextProcessor : ScriptableObject
     {
-        public virtual string FindText(ILocalizeableText text) => text.Text;
-        public virtual SerializedProperty FindProperty(ILocalizeableText text) => text.Property;
-        public static SerializedProperty GetProperty(ILocalizeableText text)
+        public virtual string GetText(ILocalizeableText text) => text.TextValue;
+        public virtual SerializedProperty GetProperty(ILocalizeableText text) => text.TextProperty;
+        public static SerializedProperty FindProperty(ILocalizeableText text)
         {
             DialogueTreeTextProcessor processor = SimpleDialogueSettings.Resolve();
 
             if (processor != null)
-                return processor.FindProperty(text);
+                return processor.GetProperty(text);
 
             Debug.LogError("no dialogue processor found, please make sure to select one in the project settings.");
 
-            return text.Property;
+            return text.TextProperty;
         }
     }
 }

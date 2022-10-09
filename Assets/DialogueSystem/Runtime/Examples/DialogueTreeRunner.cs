@@ -5,15 +5,8 @@ using UnityEngine;
 
 namespace Simple.DialogueTree
 {
-    /// <summary>
-    /// <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html" rel="external">"UnityEngine.MonoBehaviour"</a>
-    /// That allows you to run a <see cref="DialogueTree"/> in Unity.
-    /// </summary>
     public class DialogueTreeRunner : MonoBehaviour
     {
-        /// <summary>
-        /// The <see cref="DialogueTree"/> to run.
-        /// </summary>
         [SerializeField] public DialogueTree tree;
         [SerializeField] DialogueTreeTextProcessor textProcessor;
 
@@ -22,9 +15,6 @@ namespace Simple.DialogueTree
 
         List<TreeRunnerButton> buttons = new List<TreeRunnerButton>();
 
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
-        /// </summary>
         private void Start()
         {
             if (tree == null) return;
@@ -38,7 +28,7 @@ namespace Simple.DialogueTree
                 buttons.Clear();
 
                 Line line = (Line)node;
-                uiText = textProcessor.FindText(line);
+                uiText = textProcessor.GetText(line);
                 nextNodeAction = () => HandleNode(line.Next);
             }
             else if (node as Choice != null)
@@ -51,7 +41,7 @@ namespace Simple.DialogueTree
 
                 foreach (ChoiceOption option in choice.Options)
                 {
-                    buttons.Add(new TreeRunnerButton() { Text = textProcessor.FindText(option), Action = () => HandleNode(option.Next) });
+                    buttons.Add(new TreeRunnerButton() { Text = textProcessor.GetText(option), Action = () => HandleNode(option.Next) });
                 }
             }
             else

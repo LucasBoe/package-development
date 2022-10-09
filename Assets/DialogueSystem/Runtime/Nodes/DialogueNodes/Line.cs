@@ -19,20 +19,20 @@ namespace Simple.DialogueTree.Nodes
         [SerializeField, ReadOnly] protected DialogueNode next;
         public DialogueNode Next => next;
 
-
         [SerializeField, ReadOnly] public string Text;
-        string ILocalizeableText.Text => Text;
+        string ILocalizeableText.TextValue => Text;
 
         [SerializeField, ReadOnly] private bool isLocalized = false;
         public bool IsLocalized { get => isLocalized; }
-        public SerializedProperty Property { get => new SerializedObject(this).FindProperty("Text"); }
-        public string GetGUID() => guid;
+        public SerializedProperty TextProperty { get => new SerializedObject(this).FindProperty("Text"); }
+        public string Guid => base.guid;
         public string GetValue() => Text;
-        public void SetIsLocalized(bool localized, string key = "")
+        public void SetLocalized(bool localized, string key = "")
         {
             isLocalized = localized;
             if (localized) Text = key;
         }
+        private void OnDestroy() => ILocalizableEvents.OnDestroyAction?.Invoke(guid);
 
         #region Overrides of Node
 

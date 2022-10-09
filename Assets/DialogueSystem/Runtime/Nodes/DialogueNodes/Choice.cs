@@ -7,28 +7,19 @@ namespace Simple.DialogueTree.Nodes
 {
     public class Choice : DialogueNode, ILocalizeableTextContainer
     {
-        /// <value>
-        /// The Children that this <see cref="DialogueNode"/> contains.
-        /// </value>
         [SerializeField] protected List<ChoiceOption> options = new List<ChoiceOption>();
-        public override List<ScriptableObject> GetChildNodes() => options.Select(o => o as ScriptableObject).ToList();
-
         public List<ChoiceOption> Options => options;
+        public override List<ScriptableObject> GetContainedObjects() => Options.Select(o => o as ScriptableObject).ToList();
         public string ContainerName => name;
-
         public ILocalizeableText[] GetAllChilds() => options.ToArray();
 
         #region Overrides of Node
-
-        /// <inheritdoc />
         public override void SetNextNode(int optionIndex, DialogueNode nextNode)
         {
             Debug.Log("Set Next from Index: " + optionIndex);
 
             options[optionIndex].Next = nextNode;
         }
-
-        /// <inheritdoc />
         public override void RemoveAsNextNode(DialogueNode childNode)
         {
             for (int i = options.Count - 1; i > 0; i--)
@@ -37,8 +28,6 @@ namespace Simple.DialogueTree.Nodes
                     options.RemoveAt(i);
             }
         }
-
-        /// <inheritdoc />
         public override List<DialogueNode> GetNextNodes()
         {
             return options.Select(o => o.Next).ToList();
@@ -55,7 +44,6 @@ namespace Simple.DialogueTree.Nodes
 
             return nodeInfos;
         }
-
         #endregion
     }
 }

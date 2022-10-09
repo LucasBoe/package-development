@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   master: {fileID: 11400000}
   Name: English
-  pairs: []
+  pairs:
+  - Key:
+      Key: d1bc20f4ae5ea264b933901507d4b0f1
+      Name: NPC1_Line (Simple.DialogueTree.Nodes.Line)
+    Value: I'm an NPC!
+  - Key:
+      Key: 8f3b29568c649bd48bd06f478ef693ed
+      Name: NPC1_Choice > Option 0 (Simple.DialogueTree.Nodes.ChoiceOption)
+    Value: Option 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +35,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f397a4c5f73064ab9a1fed6176ee13, type: 3}
   m_Name: LocalizationDatabase
   m_EditorClassIdentifier: 
-  keys: []
+  keys:
+  - Key: d1bc20f4ae5ea264b933901507d4b0f1
+    Name: NPC1_Line (Simple.DialogueTree.Nodes.Line)
+  - Key: 8f3b29568c649bd48bd06f478ef693ed
+    Name: NPC1_Choice > Option 0 (Simple.DialogueTree.Nodes.ChoiceOption)
   languages:
   - {fileID: -5406573849392729687}
   - {fileID: 3011719677472350717}

@@ -9,39 +9,14 @@ using System.Linq;
 
 namespace Simple.DialogueTree.Editor.Views
 {
-    /// <summary>
-    /// > [!WARNING]
-    /// > Experimental: this API is experimental and might be changed or removed in the future.
-    /// 
-    /// A View for the Behavior Tree, derived from <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.GraphView.html" rel="external">UnityEditor.Experimental.GraphView.GraphView</a>
-    /// Can be used in the UI Builder.
-    /// </summary>
     public class DialogueTreeView : GraphView
     {
-        /// <summary>
-        /// Required in order to have <see cref="DialogueTreeView"/> show up in the UI Builder Library.
-        /// </summary>
         public new class UxmlFactory : UxmlFactory<DialogueTreeView, UxmlTraits> { }
+        public Action<DialogueNode> OnNodeSelectedEvent;
 
-        /// <summary>
-        /// <value>Notifies the Observers that a <see cref="DialogueNode"/> has been Selected and pass the <see cref="DialogueNode"/> that was selected.</value>
-        /// </summary>
-        public Action<DialogueNode> onNodeSelected;
+        private DialogueTree dialogueTree;
+        private bool hasTree => dialogueTree != null;
 
-        /// <summary>
-        /// <value>The Tree associated with this view.</value>
-        /// </summary>
-        private DialogueTree m_tree;
-
-        /// <summary>
-        /// <value>Dose the view have a tree</value>
-        /// </summary>
-        private bool m_hasTree;
-
-        /// <summary>
-        /// Creates a new <see cref="DialogueTreeView"/>.
-        /// Required in order to have this show up in the UI Builder Library.
-        /// </summary>
         public DialogueTreeView()
         {
             style.flexGrow = 1;
@@ -54,35 +29,22 @@ namespace Simple.DialogueTree.Editor.Views
             Undo.undoRedoPerformed += UndoRedoPerformed;
         }
 
-        /// <summary>
-        /// <a href="https://docs.unity3d.com/ScriptReference/Undo-Undo.UndoRedoCallback.html" rel="external">UnityEditor.Undo.UndoRedoCallback</a> assigned to <a href="https://docs.unity3d.com/ScriptReference/Undo-undoRedoPerformed.html" rel="external">UnityEditor.Undo.undoRedoPerformed</a>
-        /// </summary>
-        private void UndoRedoPerformed()
+        public void PopulateViewFromTree(DialogueTree tree)
         {
-            PopulateView(m_tree);
-            AssetDatabase.SaveAssets();
-        }
-
-        /// <summary>
-        /// Populate the View with the passed in tree
-        /// </summary>
-        /// <param name="tree">The <see cref="DialogueTree"/> to populate the View from</param>
-        public void PopulateView(DialogueTree tree)
-        {
-            m_tree = tree;
+            dialogueTree = tree;
 
             graphViewChanged -= OnGraphViewChanged;
             DeleteElements(graphElements.ToList());
             graphViewChanged += OnGraphViewChanged;
 
-            m_hasTree = m_tree != null;
-            if (!m_hasTree) return;
-            m_tree.GetNodes().ForEach(n =>
+            if (!hasTree) return;
+
+            dialogueTree.GetNodes().ForEach(n =>
             {
-                CreateNodeView(n, this);
+                CreateViewForNode(n, this);
             });
 
-            var edgesQuery = from singleNode in m_tree.GetNodes()
+            var edgesQuery = from singleNode in dialogueTree.GetNodes()
                          from nexts in singleNode.GetNextNodeInfos()
                          where nexts.Value != null
                          let nextNodeVisuals = GetNodeByGuid(nexts.Value.guid) as DialogueTreeNodeView
@@ -97,13 +59,9 @@ namespace Simple.DialogueTree.Editor.Views
 
         internal void ForceVisualUpdate()
         {
-            if (m_hasTree) PopulateView(m_tree);
+            if (hasTree) PopulateViewFromTree(dialogueTree);
         }
 
-        /// <summary>
-        /// Hook into the Graph View Change to delete Nodes when the Node View Element is slated to be Removed.
-        /// </summary>
-        /// <param name="graphViewChange"><a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Experimental.GraphView.GraphViewChange.html">GraphViewChange</a></param>
         private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
         {
             if (graphViewChange.elementsToRemove != null)
@@ -119,7 +77,7 @@ namespace Simple.DialogueTree.Editor.Views
                             {
                                 DialogueTreeNodeView parentView = edge.output.node as DialogueTreeNodeView;
                                 DialogueTreeNodeView childView = edge.input.node as DialogueTreeNodeView;
-                                m_tree.RemoveChild(parentView.Node, childView.Node);
+                                dialogueTree.RemoveChild(parentView.Node, childView.Node);
                                 int count = (childView.Input.connections ?? Array.Empty<Edge>()).Count();
                                 childView.Node.hasMultipleParents = count > 2;
 
@@ -129,7 +87,7 @@ namespace Simple.DialogueTree.Editor.Views
                 }
             }
 
-            if (graphViewChange.edgesToCreate != null && m_hasTree)
+            if (graphViewChange.edgesToCreate != null && hasTree)
             {
                 foreach (Edge edge in graphViewChange.edgesToCreate)
                 {
@@ -138,7 +96,7 @@ namespace Simple.DialogueTree.Editor.Views
 
                     int choiceIndex = GetChoiceIndexFromEdge(edge);
 
-                    m_tree.AddChild(from.Node, to.Node, choiceIndex);
+                    dialogueTree.AddChild(from.Node, to.Node, choiceIndex);
 
                     int count = (to.Input.connections ?? Array.Empty<Edge>()).Count();
                     to.Node.hasMultipleParents = count > 0;
@@ -159,74 +117,67 @@ namespace Simple.DialogueTree.Editor.Views
             return index - 1;
         }
 
-        /// <summary>
-        /// Adds a <see cref="DialogueTreeNodeView"/> from the passed in Node.
-        /// </summary>
-        /// <param name="node">The <see cref="DialogueNode"/> to create a view for.</param>
-        private void CreateNodeView(DialogueNode node, DialogueTreeView tree)
+        private void CreateViewForNode(DialogueNode node, DialogueTreeView treeView)
         {
             DialogueTreeNodeView nodeView = null;
 
             if (node as Simple.DialogueTree.Nodes.Choice != null)
             {
-                nodeView = new DialogueTreeChoiceNodeView(node as Simple.DialogueTree.Nodes.Choice, tree)
+                nodeView = new DialogueTreeChoiceNodeView(node as Simple.DialogueTree.Nodes.Choice, treeView)
                 {
-                    onNodeSelected = onNodeSelected
+                    OnNodeSelectedAction = OnNodeSelectedEvent
                 };
             } else if (node as Simple.DialogueTree.Nodes.Line != null)
             {
-                nodeView = new DialogueTreeLineNodeView(node as Simple.DialogueTree.Nodes.Line, tree)
+                nodeView = new DialogueTreeLineNodeView(node as Simple.DialogueTree.Nodes.Line, treeView)
                 {
-                    onNodeSelected = onNodeSelected
+                    OnNodeSelectedAction = OnNodeSelectedEvent
                 };
             }
 
             if (nodeView == null) return;
 
-            if (m_hasTree)
-                nodeView.onSetRootNode = _ => m_tree.rootNode = node;
+            if (hasTree)
+                nodeView.OnSetRootNodeAction = _ => dialogueTree.rootNode = node;
 
             AddElement(nodeView);
         }
 
-        /// <summary>
-        /// Create a new <see cref="DialogueNode"/> with a Node View.
-        /// </summary>
-        /// <param name="type">The Type of Node to create.</param>
-        private void CreateNode(Type type)
+        private void CreateNodeWithViewFromType(Type type)
         {
-            if (!m_hasTree) return;
+            if (!hasTree) return;
 
-            DialogueNode node = m_tree.CreateNode(type);
-            CreateNodeView(node, this);
-            Undo.RecordObject(m_tree, "Dialogue Tree (Create Node)");
+            DialogueNode node = dialogueTree.CreateNode(type);
+            CreateViewForNode(node, this);
+            Undo.RecordObject(dialogueTree, "Dialogue Tree (Create Node)");
 
             if (Application.isPlaying) return;
 
-            AssetDatabase.AddObjectToAsset(node, m_tree);
+            AssetDatabase.AddObjectToAsset(node, dialogueTree);
             AssetDatabase.SaveAssets();
 
             Undo.RegisterCreatedObjectUndo(node, "Dialogue Tree (Create Node)");
             EditorUtility.SetDirty(node);
         }
 
-        /// <summary>
-        /// Delete a <see cref="DialogueNode"/> from the tree.
-        /// </summary>
-        /// <param name="node">The <see cref="DialogueNode"/> to Delete.</param>
         private void DeleteNode(DialogueNode node)
         {
-            if (!m_hasTree) return;
+            if (!hasTree) return;
 
-            m_tree.DeleteNode(node);
-            Undo.RecordObject(m_tree, "Dialogue Tree (Delete Node)");
-            foreach (ScriptableObject child in node.GetChildNodes())
+            dialogueTree.DeleteNode(node);
+            Undo.RecordObject(dialogueTree, "Dialogue Tree (Delete Node)");
+            foreach (ScriptableObject child in node.GetContainedObjects())
             {
                 Undo.DestroyObjectImmediate(child);
             }
             Undo.DestroyObjectImmediate(node);
             AssetDatabase.SaveAssets();
-            EditorUtility.SetDirty(m_tree);
+            EditorUtility.SetDirty(dialogueTree);
+        }
+        private void UndoRedoPerformed()
+        {
+            PopulateViewFromTree(dialogueTree);
+            AssetDatabase.SaveAssets();
         }
 
         #region Overrides of GraphView
@@ -238,8 +189,8 @@ namespace Simple.DialogueTree.Editor.Views
         /// <param name="evt">The (<a href="https://docs.unity3d.com/2021.3/Documentation/ScriptReference/UIElements.ContextualMenuPopulateEvent.html" rel="external">UnityEngine.UIElements.ContextualMenuPopulateEvent</a>) event holding the menu to populate.</param>
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
-            evt.menu.AppendAction("Add Choice", _ => CreateNode(typeof(Simple.DialogueTree.Nodes.Choice)));
-            evt.menu.AppendAction("Add Line", _ => CreateNode(typeof(Simple.DialogueTree.Nodes.Line)));
+            evt.menu.AppendAction("Add Choice", _ => CreateNodeWithViewFromType(typeof(Simple.DialogueTree.Nodes.Choice)));
+            evt.menu.AppendAction("Add Line", _ => CreateNodeWithViewFromType(typeof(Simple.DialogueTree.Nodes.Line)));
 
             //TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<Node>();
             //foreach (Type type in types)

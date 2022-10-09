@@ -171,11 +171,11 @@ namespace Simple.Localization
                         {
                             foreach (ILocalizeableText text in notLocalized)
                             {
-                                string key = text.GetGUID();
+                                string key = text.Guid;
                                 if (!settings.DefaultLanguage.HasEntry(key))
                                 {
-                                    settings.DefaultLanguage.AddEntry(new LocalizationKey() { Key = key, Name = textContainer.ContainerName + "_" + text.ToString()}, text.GetValue());
-                                    text.SetIsLocalized(true, key);
+                                    settings.DefaultLanguage.AddEntry(new LocalizationKey() { Key = key, Name = textContainer.ContainerName + "_" + text.ToString()}, text.TextValue);
+                                    text.SetLocalized(true, key);
                                 }
                             }
                         }

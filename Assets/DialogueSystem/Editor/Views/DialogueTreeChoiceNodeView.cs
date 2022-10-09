@@ -19,10 +19,10 @@ namespace Simple.DialogueTree.Editor.Views
         public DialogueTreeChoiceNodeView(Choice node, DialogueTreeView tree) : base(node, tree, AssetDatabase.GetAssetPath(Resources.Load<VisualTreeAsset>("DialogueTreeChoiceNodeView")))
         {
             choiceOutputPorts = new List<Port>();
-
             VisualElement contents = this.Q<VisualElement>("contents");
+            int maxOptionCount = contents.childCount - 2;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < maxOptionCount; i++)
             {
                 bool exists = i < node.Options.Count;
                 VisualElement element = this.Q<VisualElement>((i + 1).ToString());
@@ -32,13 +32,13 @@ namespace Simple.DialogueTree.Editor.Views
                 else
                 {
                     ChoiceOption option = node.Options[i];
-                    SerializedProperty property = DialogueTreeTextProcessor.GetProperty(option);
+                    SerializedProperty property = DialogueTreeTextProcessor.FindProperty(option);
                     TextField textField = element.Q<TextField>("textField");
 
                     bool properyExists = property != null;
 
                     if (!option.IsLocalized || !properyExists)
-                        textField.Remove(textField.Q<Label>("localized"));             
+                        textField.Remove(textField.Q<Label>("localized"));
 
                     if (properyExists)
                     {
@@ -52,8 +52,7 @@ namespace Simple.DialogueTree.Editor.Views
 
                     VisualElement outputContainer = element.Q<VisualElement>("output");
 
-                    Port output = InstantiatePort(Orientation.Horizontal, Direction.Output,
-                          Port.Capacity.Single, typeof(DialogueNode));
+                    Port output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
                     if (output != null)
                     {
                         output.portName = "";
@@ -67,7 +66,7 @@ namespace Simple.DialogueTree.Editor.Views
 
             this.Q<Button>("add").clicked += () =>
             {
-                if (node.Options.Count < 5)
+                if (node.Options.Count < maxOptionCount)
                 {
                     ChoiceOption optObj = ChoiceOption.CreateInstance(typeof(ChoiceOption)) as ChoiceOption;
                     optObj.name = node.name + " > Option " + node.Options.Count;
@@ -77,13 +76,14 @@ namespace Simple.DialogueTree.Editor.Views
 
                     if (Application.isPlaying) return;
 
+                    node.Options.Add(optObj);
+
                     AssetDatabase.AddObjectToAsset(optObj, node);
                     AssetDatabase.SaveAssets();
 
                     Undo.RegisterCreatedObjectUndo(optObj, "Dialogue Choice (Create Option");
                     EditorUtility.SetDirty(optObj);
 
-                    node.Options.Add(optObj);
                     TryUpdateTree();
                 }
             };
@@ -93,11 +93,12 @@ namespace Simple.DialogueTree.Editor.Views
                 if (node.Options.Count > 0)
                 {
                     ChoiceOption optObj = node.Options[node.Options.Count - 1];
-                    node.Options.Remove(optObj);
 
                     Undo.RecordObject(node, "Dialogue Choice (Delete Option)");
 
+                    node.Options.Remove(optObj);
                     Undo.DestroyObjectImmediate(optObj);
+
                     AssetDatabase.SaveAssets();
                     EditorUtility.SetDirty(node);
 

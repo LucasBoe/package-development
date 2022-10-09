@@ -120,6 +120,19 @@ namespace Simple.Localization
             //pairs.Where(p => p.Key == key).Select(p => p.Value = textAfter);
         }
 
+        public void TryRemoveEntry(string key)
+        {
+            LocalizationKeyValuePair match = null;
+            foreach (var pair in pairs)
+            {
+                if (pair.Key.Is(key))
+                    match = pair;
+            }
+
+            if (match != null)
+                pairs.Remove(match);
+        }
+
 #endif
     }
 

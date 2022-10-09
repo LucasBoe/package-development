@@ -14,12 +14,6 @@ namespace Simple.DialogueTree
         public const string DIALOGUE_SETTINGS_PATH = "Assets/SimpleDialogueSettings.asset";
 
         [SerializeField]
-        private int m_Number;
-
-        [SerializeField]
-        private string m_SomeString;
-
-        [SerializeField]
         DialogueTreeTextProcessor textProcessor;
 
         public DialogueTreeTextProcessor TextProcessor { get => textProcessor; set => textProcessor = value; }
@@ -44,8 +38,6 @@ namespace Simple.DialogueTree
             if (settings == null)
             {
                 settings = ScriptableObject.CreateInstance<SimpleDialogueSettings>();
-                settings.m_Number = 42;
-                settings.m_SomeString = "The answer to the universe";
                 AssetDatabase.CreateAsset(settings, DIALOGUE_SETTINGS_PATH);
                 AssetDatabase.SaveAssets();
                 Debug.LogError("No Settings found, creating new settings at " + DIALOGUE_SETTINGS_PATH + ".");
@@ -75,10 +67,6 @@ namespace Simple.DialogueTree
                 guiHandler = (searchContext) =>
                 {
                     var settings = SimpleDialogueSettings.GetOrCreateSettings();
-                    var serializedSettings = SimpleDialogueSettings.GetSerializedSettings();
-                    EditorGUILayout.PropertyField(serializedSettings.FindProperty("m_Number"), new GUIContent("My Number"));
-                    EditorGUILayout.PropertyField(serializedSettings.FindProperty("m_SomeString"), new GUIContent("My String"));
-
                     DialogueTreeTextProcessor processor = EditorGUILayout.ObjectField(settings.TextProcessor, typeof(DialogueTreeTextProcessor), true) as DialogueTreeTextProcessor;
 
                     if (processor != settings.TextProcessor)

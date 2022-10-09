@@ -12,9 +12,6 @@ namespace Simple.DialogueTree.Editor.Views
 {
     public class DialogueTreeLineNodeView : DialogueTreeNodeView
     {
-        /// <value>
-        /// The Output <a href="https://docs.unity3d.com/ScriptReference/Experimental.GraphView.Port.html" rel="external">UnityEditor.Experimental.GraphView.Port</a>.
-        /// </value>
         public Port Output;
         private TextField textField;
         protected override List<Port> GetAllOutputs()
@@ -27,7 +24,7 @@ namespace Simple.DialogueTree.Editor.Views
             textField = this.Q<TextField>("textField");
             textField.bindingPath = "Text";
 
-            SerializedProperty property = DialogueTreeTextProcessor.GetProperty(lineNode);
+            SerializedProperty property = DialogueTreeTextProcessor.FindProperty(lineNode);
 
             bool propertyExists = property != null;
 
@@ -46,19 +43,15 @@ namespace Simple.DialogueTree.Editor.Views
             CreateOutputPorts();
         }
 
-        /// <summary>
-        /// Create Output Port based on the Node Type.
-        /// </summary>
         private void CreateOutputPorts()
         {
-
-            Output = InstantiatePort(Orientation.Horizontal, Direction.Output,
-                                   Port.Capacity.Single, typeof(DialogueNode));
-
-            if (Output == null) return;
-            Output.portName = "";
-            Output.name = "output-port";
-            outputContainer.Add(Output);
+            Output = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(DialogueNode));
+            if (Output != null)
+            {
+                Output.portName = "";
+                Output.name = "output-port";
+                outputContainer.Add(Output);
+            }
         }
     }
 }

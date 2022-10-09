@@ -5,10 +5,9 @@ using UnityEngine;
 
 public interface ILocalizeableText
 {
-    void SetIsLocalized(bool localized, string key = "");
-    string GetGUID();
-    string GetValue();
+    void SetLocalized(bool localized, string key = "");
     bool IsLocalized { get; }
-    string Text { get; }
-    SerializedProperty Property { get; }
+    string Guid { get; }
+    string TextValue { get; }
+    SerializedProperty TextProperty { get; }
 }

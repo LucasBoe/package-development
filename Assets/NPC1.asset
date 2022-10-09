@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5727735845389606032
+--- !u!114 &-5123601545219941271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,29 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
   m_Name: Choice > Option 1
   m_EditorClassIdentifier: 
-  guid: da512c8b99b8ae24ba6bff19ea1ce679
+  guid: cefbf6d4dc44f774ab7f9419d35ec654
   isLocalized: 0
-  Text: 
+  Text: 22
   Next: {fileID: 0}
---- !u!114 &-4571040239449113506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
-  m_Name: Choice
-  m_EditorClassIdentifier: 
-  nodeGraphPosition: {x: 809.1699, y: 386}
-  hasMultipleParents: 0
-  guid: b22aab7ff1efc7f42bf5d6d63639e8f9
-  options:
-  - {fileID: -2466042322478000495}
-  - {fileID: -5727735845389606032}
---- !u!114 &-2466042322478000495
+--- !u!114 &-651701787964497581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,11 +26,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
-  m_Name: Choice > Option 0
+  m_Name: Choice > Option 2
   m_EditorClassIdentifier: 
-  guid: 8f3b29568c649bd48bd06f478ef693ed
+  guid: 135c8fcd3490b5741b7ce7c874f90cc7
   isLocalized: 0
-  Text: 
+  Text: 33
   Next: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -65,7 +47,23 @@ MonoBehaviour:
   rootNode: {fileID: 2017819508937536112}
   nodes:
   - {fileID: 2017819508937536112}
-  - {fileID: -4571040239449113506}
+  - {fileID: 7905543376802476719}
+--- !u!114 &141658162979848959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd7ea34a843984b968b669fc1ce2a6, type: 3}
+  m_Name: Choice > Option 0
+  m_EditorClassIdentifier: 
+  guid: f6f5bf15e77cf704fa399a7ca30ff488
+  isLocalized: 0
+  Text: 11
+  Next: {fileID: 0}
 --- !u!114 &2017819508937536112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,9 +76,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
   m_Name: Line
   m_EditorClassIdentifier: 
-  nodeGraphPosition: {x: 357.75473, y: 526.56604}
+  nodeGraphPosition: {x: 411.73584, y: 537.9623}
   hasMultipleParents: 0
   guid: d1bc20f4ae5ea264b933901507d4b0f1
-  next: {fileID: -4571040239449113506}
-  Text: I'm an NPC!
-  isLocalized: 0
+  next: {fileID: 7905543376802476719}
+  Text: d1bc20f4ae5ea264b933901507d4b0f1
+  isLocalized: 1
+--- !u!114 &7905543376802476719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
+  m_Name: Choice
+  m_EditorClassIdentifier: 
+  nodeGraphPosition: {x: 870.74725, y: 537.8838}
+  hasMultipleParents: 0
+  guid: 2bedeb6f9987a4648843ef0d2cc12ae1
+  options:
+  - {fileID: 141658162979848959}
+  - {fileID: -5123601545219941271}
+  - {fileID: -651701787964497581}

@@ -10,25 +10,25 @@ using UnityEditor;
 public class DialogueTreeLocalizationTextProcessor : DialogueTreeTextProcessor
 {
     [SerializeField] LocalizationLanguageDatabase activeLanguage;
-    public override string FindText(ILocalizeableText line)
+    public override string GetText(ILocalizeableText line)
     {
-        if (!line.IsLocalized) return line.Text;
+        if (!line.IsLocalized) return line.TextValue;
 
         if (!TryGetActiveLanguage()) return null;
 
-        string text = activeLanguage.GetLocalizedText(line.Text);
+        string text = activeLanguage.GetLocalizedText(line.TextValue);
         if (text != "") return text;
 
-        return base.FindText(line);
+        return base.GetText(line);
     }
 
-    public override SerializedProperty FindProperty(ILocalizeableText text)
+    public override SerializedProperty GetProperty(ILocalizeableText text)
     {
-        if (!text.IsLocalized) return text.Property;
+        if (!text.IsLocalized) return text.TextProperty;
 
         if (!TryGetActiveLanguage()) return null;
 
-        return activeLanguage.GetObject(text.Text);
+        return activeLanguage.GetObject(text.TextValue);
     }
 
     private bool TryGetActiveLanguage()

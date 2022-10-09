@@ -60,6 +60,6 @@ namespace Simple.DialogueTree.Nodes
         }
 
         public abstract Dictionary<int, DialogueNode> GetNextNodeInfos();
-        public virtual List<ScriptableObject> GetChildNodes() => new List<ScriptableObject>();
+        public virtual List<ScriptableObject> GetContainedObjects() => new List<ScriptableObject>();
     }
 }

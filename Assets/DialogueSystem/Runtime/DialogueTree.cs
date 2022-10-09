@@ -18,14 +18,8 @@ namespace Simple.DialogueTree
     {
         [HideInInspector] public DialogueNode rootNode;
         [SerializeField, ReadOnly] private List<DialogueNode> nodes = new List<DialogueNode>();
-        public List<DialogueNode> GetNodes()
-        {
-            return nodes;
-        }
-
-        private bool m_hasRootNode;
+        public List<DialogueNode> GetNodes() => nodes;
         public string ContainerName => name;
-
         public DialogueNode CreateNode(System.Type type)
         {
             DialogueNode node = CreateInstance(type) as DialogueNode;

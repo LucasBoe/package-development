@@ -17,8 +17,44 @@ namespace Simple.Localization
         public List<LocalizationKey> Keys => keys;
         public List<LocalizationLanguageDatabase> Languages => languages;
 
-
 #if UNITY_EDITOR
+        private void OnEnable()
+        {
+            ILocalizableEvents.OnDestroyAction -= RemoveKey;
+            ILocalizableEvents.OnDestroyAction += RemoveKey;
+        }
+
+        private void OnDisable() => ILocalizableEvents.OnDestroyAction -= RemoveKey;
+        private void RemoveKey(string key)
+        {
+            int matchIndex = -1;
+
+            for (int i = 0; i < keys.Count; i++)
+            {
+                if (keys[i].Key == key)
+                {
+                    matchIndex = i;
+                    break;
+                }
+            }
+
+            if (matchIndex == -1)
+            {
+                Debug.Log("Deleted ILocalizeableText and found not match with " + key);
+            }
+            else
+            {
+
+                foreach (var item in languages)
+                    item.TryRemoveEntry(key);
+
+                keys.RemoveAt(matchIndex);
+
+                Debug.Log("Deleted ILocalizeableText and removed all entries with key: " + key);
+            }
+
+        }
+
         internal void AddLanguage(LocalizationLanguageDatabase localizationLanguageDatabase)
         {
             if (!languages.Contains(localizationLanguageDatabase))
@@ -69,5 +105,6 @@ namespace Simple.Localization
         public string Key;
         public string Name;
         public bool Is(LocalizationKey key) => key.Key == Key;
+        public bool Is(string key) => key == Key;
     }
 }
