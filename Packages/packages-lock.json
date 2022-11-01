@@ -7,6 +7,37 @@
       "dependencies": {},
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
     },
+    "com.lucasboe.simple-dialogue-system": {
+      "version": "file:simple-dialogue-system",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.dbrizov.naughtyattributes": "2.1.4"
+      }
+    },
+    "com.lucasboe.simple-localization-system": {
+      "version": "file:simple-localization-system",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.dbrizov.naughtyattributes": "2.1.4",
+        "com.lucasboe.simple-dialogue-system": "0.0.1"
+      }
+    },
+    "com.lucasboe.simple-sound-system": {
+      "version": "file:simple-sound-system",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.dbrizov.naughtyattributes": "2.1.4"
+      }
+    },
+    "com.lucasboe.util.coroutine": {
+      "version": "file:coroutine-util",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.collab-proxy": {
       "version": "1.15.12",
       "depth": 0,

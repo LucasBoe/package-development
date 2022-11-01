@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0df9e01a0a328d4385c6240fe0dc1a1, type: 3}
-  m_Name: DefaultTextProcessor
+  m_Script: {fileID: 11500000, guid: 244ae46f5ba728243b8f5df23c9f9385, type: 3}
+  m_Name: SimpleDialogueSettings
   m_EditorClassIdentifier: 
+  textProcessor: {fileID: 0}
