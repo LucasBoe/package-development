@@ -28,6 +28,8 @@ namespace Simple.DialogueTree.Nodes
             guid = UnityEditor.GUID.Generate().ToString();
         }
 
+        public abstract void Create(string name);
+
         #region Abstract Methods
 
         /// <summary>

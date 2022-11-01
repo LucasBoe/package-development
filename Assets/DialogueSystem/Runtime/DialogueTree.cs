@@ -23,8 +23,7 @@ namespace Simple.DialogueTree
         public DialogueNode CreateNode(System.Type type)
         {
             DialogueNode node = CreateInstance(type) as DialogueNode;
-            node.name = type.Name;
-            node.GenerateGUID();
+            node.Create(type.Name);
 
             nodes.Add(node);
 

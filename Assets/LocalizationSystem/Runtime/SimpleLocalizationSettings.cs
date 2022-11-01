@@ -13,8 +13,8 @@ namespace Simple.Localization
     {
         public const string LOCALIZATION_SETTINGS_PATH = "Assets/SimpleLocalizationSettings.asset";
 
-        [SerializeField]
-        LocalizationLanguageDatabase defaultLanguage;
+        [SerializeField] LocalizationLanguageDatabase defaultLanguage;
+        [SerializeField] public bool AutoCreateLocalizationKeys;
         public LocalizationLanguageDatabase DefaultLanguage { get => defaultLanguage; set => defaultLanguage = value; }
 
         public static SimpleLocalizationSettings Resolve() => GetOrCreateSettings();
@@ -59,7 +59,14 @@ namespace Simple.Localization
                 guiHandler = (searchContext) =>
                 {
                     var settings = SimpleLocalizationSettings.GetOrCreateSettings();
-                    LocalizationLanguageDatabase defaultLanguage = EditorGUILayout.ObjectField("Default Language",settings.DefaultLanguage, typeof(LocalizationLanguageDatabase), true) as LocalizationLanguageDatabase;
+                    var settingsSerealized = SimpleLocalizationSettings.GetSerializedSettings();
+
+                    LocalizationLanguageDatabase defaultLanguage = EditorGUILayout.ObjectField("Default Language", settings.DefaultLanguage, typeof(LocalizationLanguageDatabase), true) as LocalizationLanguageDatabase;
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(settingsSerealized.FindProperty("AutoCreateLocalizationKeys"), new GUIContent(""), GUILayout.Width(20));
+                    settingsSerealized.ApplyModifiedProperties();
+                    EditorGUILayout.LabelField("Automaticall create new entries for localization when a ILocalizeable Object is created");
+                    GUILayout.EndHorizontal();
 
                     if (settings.DefaultLanguage == null)
                     {

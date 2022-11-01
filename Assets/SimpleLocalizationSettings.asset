@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SimpleLocalizationSettings
   m_EditorClassIdentifier: 
   defaultLanguage: {fileID: -5406573849392729687, guid: 4b5e96dd53690a34d960258983ac4181, type: 2}
+  AutoCreateLocalizationKeys: 1

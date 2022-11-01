@@ -13,9 +13,27 @@ MonoBehaviour:
   m_Name: Choice > Option 1
   m_EditorClassIdentifier: 
   guid: cefbf6d4dc44f774ab7f9419d35ec654
+  isLocalized: 1
+  Text: cefbf6d4dc44f774ab7f9419d35ec654
+  Next: {fileID: -2141062107835918881}
+--- !u!114 &-2141062107835918881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  nodeGraphPosition: {x: 1122.1133, y: 582.78345}
+  hasMultipleParents: 0
+  guid: cdb7949c61d29684a9dd4c82f3c4781e
+  next: {fileID: 0}
+  Text: dasdsadas
   isLocalized: 0
-  Text: 22
-  Next: {fileID: 0}
 --- !u!114 &-651701787964497581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,8 +47,8 @@ MonoBehaviour:
   m_Name: Choice > Option 2
   m_EditorClassIdentifier: 
   guid: 135c8fcd3490b5741b7ce7c874f90cc7
-  isLocalized: 0
-  Text: 33
+  isLocalized: 1
+  Text: 135c8fcd3490b5741b7ce7c874f90cc7
   Next: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -48,6 +66,8 @@ MonoBehaviour:
   nodes:
   - {fileID: 2017819508937536112}
   - {fileID: 7905543376802476719}
+  - {fileID: 6510520709179258129}
+  - {fileID: -2141062107835918881}
 --- !u!114 &141658162979848959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,9 +81,9 @@ MonoBehaviour:
   m_Name: Choice > Option 0
   m_EditorClassIdentifier: 
   guid: f6f5bf15e77cf704fa399a7ca30ff488
-  isLocalized: 0
-  Text: 11
-  Next: {fileID: 0}
+  isLocalized: 1
+  Text: f6f5bf15e77cf704fa399a7ca30ff488
+  Next: {fileID: 6510520709179258129}
 --- !u!114 &2017819508937536112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +102,24 @@ MonoBehaviour:
   next: {fileID: 7905543376802476719}
   Text: d1bc20f4ae5ea264b933901507d4b0f1
   isLocalized: 1
+--- !u!114 &6510520709179258129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
+  m_Name: Line
+  m_EditorClassIdentifier: 
+  nodeGraphPosition: {x: 1122.4341, y: 515.3208}
+  hasMultipleParents: 0
+  guid: 1ed646e0cff0caf46a4b8b56f1acdf93
+  next: {fileID: 0}
+  Text: ddddd
+  isLocalized: 0
 --- !u!114 &7905543376802476719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f25b121ea9008b408c0b04e647a4f9f, type: 3}
   m_Name: Choice
   m_EditorClassIdentifier: 
-  nodeGraphPosition: {x: 870.74725, y: 537.8838}
+  nodeGraphPosition: {x: 757.22644, y: 515.32074}
   hasMultipleParents: 0
   guid: 2bedeb6f9987a4648843ef0d2cc12ae1
   options:

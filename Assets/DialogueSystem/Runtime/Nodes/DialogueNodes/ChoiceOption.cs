@@ -28,5 +28,19 @@ namespace Simple.DialogueTree.Nodes
             if (isLocalized) Text = key;
         }
         private void OnDestroy() => ILocalizableEvents.OnDestroyAction?.Invoke(guid);
+
+        public void Create(string name)
+        {
+            this.name = name;
+
+            //TODO: Generalize it so you don't have to write it over and over again
+            GenerateGUID();
+            ILocalizableEvents.OnCreateAction?.Invoke(guid);
+
+            if (DialogueTreeTextProcessor.FindIsValidKey(guid))
+            {
+                SetLocalized(true, guid);
+            }
+        }
     }
 }

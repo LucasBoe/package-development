@@ -22,9 +22,26 @@ namespace Simple.Localization
         {
             ILocalizableEvents.OnDestroyAction -= RemoveKey;
             ILocalizableEvents.OnDestroyAction += RemoveKey;
+            ILocalizableEvents.OnCreateAction -= CreateKey;
+            ILocalizableEvents.OnCreateAction += CreateKey;
         }
 
-        private void OnDisable() => ILocalizableEvents.OnDestroyAction -= RemoveKey;
+
+        private void OnDisable()
+        {
+            ILocalizableEvents.OnDestroyAction -= RemoveKey;
+            ILocalizableEvents.OnCreateAction -= CreateKey;
+        }
+        private void CreateKey(string key)
+        {
+            Debug.Log("Auto-create entry for " + key);
+
+            SimpleLocalizationSettings settings = SimpleLocalizationSettings.Resolve();
+            if (settings == null || !settings.AutoCreateLocalizationKeys || settings.DefaultLanguage == null || settings.DefaultLanguage.HasEntry(key)) return;
+
+            settings.DefaultLanguage.AddEntry(key, "");
+        }
+
         private void RemoveKey(string key)
         {
             int matchIndex = -1;

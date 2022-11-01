@@ -4,5 +4,6 @@ using UnityEngine;
 
 public static class ILocalizableEvents
 {
+    public static System.Action<string> OnCreateAction;
     public static System.Action<string> OnDestroyAction;
 }

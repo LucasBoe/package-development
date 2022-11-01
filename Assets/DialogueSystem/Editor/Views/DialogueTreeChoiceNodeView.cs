@@ -69,8 +69,8 @@ namespace Simple.DialogueTree.Editor.Views
                 if (node.Options.Count < maxOptionCount)
                 {
                     ChoiceOption optObj = ChoiceOption.CreateInstance(typeof(ChoiceOption)) as ChoiceOption;
-                    optObj.name = node.name + " > Option " + node.Options.Count;
-                    optObj.GenerateGUID();
+
+                    optObj.Create(node.name);
 
                     Undo.RecordObject(node, "Dialogue Choice (Create Option)");
 

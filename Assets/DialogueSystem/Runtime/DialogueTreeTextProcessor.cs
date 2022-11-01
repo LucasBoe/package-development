@@ -22,5 +22,18 @@ namespace Simple.DialogueTree
 
             return text.TextProperty;
         }
+
+        internal static bool FindIsValidKey(string key)
+        {
+            DialogueTreeTextProcessor processor = SimpleDialogueSettings.Resolve();
+
+            if (processor != null)
+                return processor.IsValidKey(key);
+
+            Debug.LogError("no dialogue processor found, please make sure to select one in the project settings.");
+
+            return false;
+        }
+        public virtual bool IsValidKey(string key) => false;
     }
 }

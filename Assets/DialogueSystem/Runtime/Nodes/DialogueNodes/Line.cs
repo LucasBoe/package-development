@@ -27,6 +27,17 @@ namespace Simple.DialogueTree.Nodes
         public SerializedProperty TextProperty { get => new SerializedObject(this).FindProperty("Text"); }
         public string Guid => base.guid;
         public string GetValue() => Text;
+        public override void Create(string name)
+        {
+            this.name = name;
+            GenerateGUID();
+            ILocalizableEvents.OnCreateAction?.Invoke(guid);
+
+            if (DialogueTreeTextProcessor.FindIsValidKey(guid))
+            {
+                SetLocalized(true, guid);
+            }
+        }
         public void SetLocalized(bool localized, string key = "")
         {
             isLocalized = localized;

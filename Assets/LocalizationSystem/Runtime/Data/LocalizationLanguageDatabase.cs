@@ -12,6 +12,7 @@ namespace Simple.Localization
     [CreateAssetMenu(menuName = "Simple Localization System/Language Database")]
     public class LocalizationLanguageDatabase : ScriptableObject
     {
+        //TODO: make sure reference to master db is never lost or can be reconnected easily
         [SerializeField] private LocalizationMasterDatabase master;
         public string Name;
         public List<LocalizationKeyValuePair> pairs = new List<LocalizationKeyValuePair>();

@@ -12,6 +12,11 @@ namespace Simple.DialogueTree.Nodes
         public override List<ScriptableObject> GetContainedObjects() => Options.Select(o => o as ScriptableObject).ToList();
         public string ContainerName => name;
         public ILocalizeableText[] GetAllChilds() => options.ToArray();
+        public override void Create(string name)
+        {
+            this.name = name;
+            GenerateGUID();
+        }
 
         #region Overrides of Node
         public override void SetNextNode(int optionIndex, DialogueNode nextNode)
