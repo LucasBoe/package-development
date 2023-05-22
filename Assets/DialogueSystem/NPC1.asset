@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f47cbf751d9b2749b1f4855f70475e6, type: 3}
   m_Name: Line
   m_EditorClassIdentifier: 
-  nodeGraphPosition: {x: 411.73584, y: 537.9623}
+  nodeGraphPosition: {x: 192.69815, y: 503.3208}
   hasMultipleParents: 0
   guid: d1bc20f4ae5ea264b933901507d4b0f1
   next: {fileID: 7905543376802476719}

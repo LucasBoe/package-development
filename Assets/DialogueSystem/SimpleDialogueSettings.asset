@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244ae46f5ba728243b8f5df23c9f9385, type: 3}
   m_Name: SimpleDialogueSettings
   m_EditorClassIdentifier: 
-  textProcessor: {fileID: 0}
+  textProcessor: {fileID: 11400000, guid: 73e0923f3ed7272408cbb8e083154647, type: 2}

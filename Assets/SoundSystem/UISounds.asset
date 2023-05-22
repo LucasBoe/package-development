@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7960038074894895239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72527e59cbfe0e94e902be4c01aecd1b, type: 3}
+  m_Name: click_solid_loww+++
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: c5c6d0efa2e13c343bfcb99721cb952c, type: 3}
+  useMultipleClipVariants: 1
+  clips:
+  - {fileID: 8300000, guid: 921b3934298dba1479e4d7ff4896603e, type: 3}
+  - {fileID: 8300000, guid: 2d313bff67ce8034b8149a851960a115, type: 3}
+  volume: 0.478
+  pitch: 1
+  pitchMin: 0.8
+  pitchMax: 1.3340783
+  randomizePitch: 1
+--- !u!114 &-5428748613950955869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72527e59cbfe0e94e902be4c01aecd1b, type: 3}
+  m_Name: penisuss
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 2d313bff67ce8034b8149a851960a115, type: 3}
+  useMultipleClipVariants: 0
+  clips: []
+  volume: 0.365
+  pitch: 1.29
+  pitchMin: 0.8
+  pitchMax: 1.2
+  randomizePitch: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e73414582b6c4f44889fead7bdd4fdb, type: 3}
+  m_Name: UISounds
+  m_EditorClassIdentifier: 
+  audioMixerGroup: {fileID: 0}
+  _sounds:
+  - {fileID: -7960038074894895239}
+  - {fileID: -5428748613950955869}
+  - {fileID: 2098415041814930414}
+--- !u!114 &2098415041814930414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72527e59cbfe0e94e902be4c01aecd1b, type: 3}
+  m_Name: yolo
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: c5c6d0efa2e13c343bfcb99721cb952c, type: 3}
+  useMultipleClipVariants: 0
+  clips: []
+  volume: 0.5
+  pitch: 1
+  pitchMin: 0.8
+  pitchMax: 1.2
+  randomizePitch: 0
